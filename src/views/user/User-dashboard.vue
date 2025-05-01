@@ -41,7 +41,6 @@
           </div>
         </div>
       </div>
-      <!-- Background image -->
     </header>
   </template>
   <script setup lang="ts">

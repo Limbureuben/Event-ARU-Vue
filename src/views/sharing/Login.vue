@@ -47,19 +47,18 @@ const form = ref({
 
 const { mutate: loginUser, onDone, onError } = useMutation(LOGIN_USER);
 
-onDone(({ data }) => {
+onDone( async ({ data }) => {
   console.log('GraphQL response:', data);
   const result = data.loginUser;
 
   if (result.success && result.token) {
     localStorage.setItem('token', result.token);
     toast.success('Login successful!');
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     if (result.user.isStaff) {
-      console.log('Redirecting to admin-dashboard');
       router.push('/admin/admin-dashboard');
     } else {
-      console.log('Redirecting to user-dashboard');
       router.push('/user-dashboard');
     }
   } else {
@@ -87,9 +86,6 @@ onMounted(() => {
   visible.value = true
 })
 </script>
-
-
-  
   
   <style scoped>
   /* Background styling */

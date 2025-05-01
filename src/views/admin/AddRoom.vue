@@ -2,16 +2,15 @@
     <div class="add-room-page">
       <form @submit.prevent="onSubmit" class="form-container" autocomplete="off">
         <h2 class="form-title">Add Event Room</h2>
-  
         <v-text-field
           label="Room Name"
           v-model="form.roomName"
+          @input="form.roomName = form.roomName.toUpperCase()"
           variant="outlined"
           density="comfortable"
           class="form-field"
           required
         />
-  
         <div class="form-row">
           <v-text-field
             label="Capacity"
@@ -125,6 +124,7 @@
       if (response.ok) {
         const data = await response.json();
         toast.success('Room added successfully!');
+        await new Promise(resolve => setTimeout(resolve, 2000));
         router.push('/admin/admin-dashboard');
       } else {
         const errorData = await response.json();

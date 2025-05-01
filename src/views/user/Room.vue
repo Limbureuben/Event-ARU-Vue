@@ -114,5 +114,10 @@ const viewImage = (imagePath) => {
   background-color: #155a9a;
 }
 
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
   </style>
   

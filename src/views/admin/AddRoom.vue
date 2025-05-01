@@ -1,10 +1,11 @@
 <template>
     <div class="add-room-page">
-      <form class="form-container">
+      <form @submit.prevent="onSubmit" class="form-container" autocomplete="off">
         <h2 class="form-title">Add Event Room</h2>
   
         <v-text-field
           label="Room Name"
+          v-model="form.roomName"
           variant="outlined"
           density="comfortable"
           class="form-field"
@@ -16,6 +17,7 @@
           <v-text-field
             label="Capacity"
             type="number"
+            v-model="form.capacity"
             variant="outlined"
             density="comfortable"
             class="form-field half"
@@ -24,6 +26,7 @@
           <v-text-field
             label="Price"
             type="number"
+            v-model="form.price"
             variant="outlined"
             density="comfortable"
             class="form-field half"
@@ -35,6 +38,7 @@
           <v-text-field
             label="Location"
             variant="outlined"
+            v-model="form.location"
             density="comfortable"
             class="form-field half"
             required
@@ -43,6 +47,7 @@
             label="Available Date"
             type="date"
             variant="outlined"
+            v-model="form.available_date"
             density="comfortable"
             class="form-field half"
             required
@@ -83,8 +88,57 @@
   import { useMutation } from '@vue/apollo-composable';
   import { useRouter } from 'vue-router';
 
-  
+  const router = useRouter();
 
+  const form = ref({
+    roomName: '',
+    capacity: '',
+    price: '',
+    location: '',
+    available_date: '',
+  })
+
+  const selectedImage = ref(null);
+
+  const onImageSelected = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      selectedImage.value = file;
+    }
+  };
+
+  const onSubmit = async () => {
+    const formData = new FormData();
+    formData.append('name', form.value.roomName);
+    formData.append('capacity', form.value.capacity);
+    formData.append('price', form.value.price);
+    formData.append('location', form.value.location || 'Ardhi University');
+    formData.append('available_date', form.value.available_date);
+    formData.append('image', selectedImage.value);
+
+    try {
+      const response = await fetch('http://localhost:8000/api/register-room/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        toast.success('Room added successfully!');
+        router.push('/admin/admin-dashboard');
+      } else {
+        const errorData = await response.json();
+        toast.error(`Error: ${errorData.message}`);
+      }
+    }
+    catch (error) {
+      toast.error('An error occurred while adding the room.');
+      console.error('Error:', error);
+    }
+  };
   </script>
   
   

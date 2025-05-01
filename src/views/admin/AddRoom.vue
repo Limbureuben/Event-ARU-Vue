@@ -78,24 +78,13 @@
   
   <script>
   import { ref } from 'vue';
+  import { useMutation } from '@vue/apollo-composable';
+  import { toast } from 'vue3-toastify';
+  import { useMutation } from '@vue/apollo-composable';
+  import { useRouter } from 'vue-router';
+
   
-  export default {
-    setup() {
-      const selectedImage = ref(null);
-  
-      const onImageSelected = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-          selectedImage.value = file;
-        }
-      };
-  
-      return {
-        selectedImage,
-        onImageSelected,
-      };
-    },
-  };
+
   </script>
   
   

@@ -81,11 +81,9 @@
     </div>
   </template>
   
-  <script>
+  <script setup>
   import { ref } from 'vue';
-  import { useMutation } from '@vue/apollo-composable';
   import { toast } from 'vue3-toastify';
-  import { useMutation } from '@vue/apollo-composable';
   import { useRouter } from 'vue-router';
 
   const router = useRouter();

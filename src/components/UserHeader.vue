@@ -45,16 +45,18 @@
 </template>
 
 <script setup lang="ts">
-  import {
-    MDBNavbar,
-    MDBNavbarItem,
-    MDBNavbarBrand,
-    MDBNavbarNav,
-    MDBNavbarToggler,
-    MDBBadge,
-    MDBIcon,
-    MDBCollapse
-  } from 'mdb-vue-ui-kit';
+  import { MDBNavbar, MDBNavbarItem,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavbarToggler,
+  MDBBadge,
+  MDBIcon,
+  MDBCollapse,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem
+} from 'mdb-vue-ui-kit';
   import { ref } from "vue";
 
   const collapse7 = ref(false);

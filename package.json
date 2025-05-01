@@ -1,0 +1,34 @@
+{
+  "name": "event",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.13.8",
+    "@mdi/font": "^7.4.47",
+    "@vue/apollo-composable": "^4.2.2",
+    "graphql": "^16.11.0",
+    "mdb-vue-ui-kit": "^6.0.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1",
+    "vue-toastification": "^2.0.0-rc.5",
+    "vue3-toastify": "^0.2.8",
+    "vuetify": "^3.5.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-graphql": "^2.0.5",
+    "@types/node": "^22.15.3",
+    "@vitejs/plugin-vue": "^5.2.2",
+    "@vue/tsconfig": "^0.7.0",
+    "sass": "^1.87.0",
+    "sass-loader": "^16.0.5",
+    "typescript": "~5.7.2",
+    "vite": "^6.3.1",
+    "vue-tsc": "^2.2.8"
+  }
+}

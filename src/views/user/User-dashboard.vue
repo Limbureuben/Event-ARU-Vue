@@ -27,10 +27,7 @@
       <!-- Background image -->
       <div
         class="p-5 text-center bg-image"
-        style="
-          background-image: url('https://mdbootstrap.com/img/new/slides/041.webp');
-          height: 591px;
-        "
+         style="background-image: url('/public/images/ardhi.jpeg'); height: 600px;"
       >
         <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
           <div class="d-flex justify-content-center align-items-center h-100">

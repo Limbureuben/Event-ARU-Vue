@@ -12,13 +12,13 @@
               Home
             </MDBNavbarItem>
             <MDBNavbarItem to="#">
-              Features
-            </MDBNavbarItem>
-            <MDBNavbarItem to="#">
-              Pricing
+              Login
             </MDBNavbarItem>
             <MDBNavbarItem to="#">
               About
+            </MDBNavbarItem>
+            <MDBNavbarItem to="#">
+              Contact
             </MDBNavbarItem>
           </MDBNavbarNav>
         </MDBCollapse>
@@ -32,12 +32,12 @@
         <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
           <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
-              <h1 class="mb-3">Heading</h1>
-              <h4 class="mb-3">Subheading</h4>
+              <h1 class="mb-3">ARDHI EVENT MANAGEMENT SYSTEM</h1>
+              <h4 class="mb-3">CSM DEPARTMENT</h4>
               <MDBBtn tag="a" lg outline="light"
                 href="#!"
                 role="button"
-                >Call to action
+                >Sign up
               </MDBBtn>
             </div>
           </div>

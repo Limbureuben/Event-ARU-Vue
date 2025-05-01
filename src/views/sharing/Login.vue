@@ -31,7 +31,6 @@
 </template>
 
 
-
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
@@ -98,9 +97,8 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f3f4f6;
     height: 100vh;
-    background: url('https://www.example.com/your-background-image.jpg') no-repeat center center fixed;
+    background: url('/public//images/ardhi.jpeg') no-repeat center center fixed;
     background-size: cover;
   }
   
@@ -110,8 +108,8 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     width: 110%;
-    height: 90%;
-    background: #ffffff; /* Dark background for contrast */
+    background: rgba(0, 0, 0, 0.5);
+    height: 100%;
     padding: 20px;
   }
   

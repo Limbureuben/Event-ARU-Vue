@@ -94,9 +94,8 @@ import { on } from 'events';
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f3f4f6;
     height: 100vh;
-    background: url('https://www.example.com/your-background-image.jpg') no-repeat center center fixed;
+    background: url('/public//images/ardhi.jpeg') no-repeat center center fixed;
     background-size: cover;
   }
   
@@ -107,7 +106,7 @@ import { on } from 'events';
     align-items: center;
     width: 100%;
     height: 100%;
-    background: #ffffff; /* Dark background for contrast */
+    background: rgba(0, 0, 0, 0.5);
     padding: 20px;
   }
   

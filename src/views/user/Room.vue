@@ -7,6 +7,7 @@
           <p><strong>Location:</strong> {{ room.location }}</p>
           <p><strong>Price:</strong> Tsh {{ room.price }}</p>
           <p><strong>Available Date:</strong> {{ formatDate(room.available_date) }}</p>
+          <button class="view-btn" @click="viewImage(room.image)">View Image</button>
           <button class="book-btn" @click="bookRoom(room.id)">Book</button>
         </div>
       </div>
@@ -83,5 +84,20 @@ onMounted(() => {
   .book-btn:hover {
     background-color: #2a5b30;
   }
+
+  .view-btn {
+  margin-right: 10px;
+  padding: 10px 16px;
+  background-color: #1976D2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.view-btn:hover {
+  background-color: #155a9a;
+}
+
   </style>
   

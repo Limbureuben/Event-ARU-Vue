@@ -59,7 +59,7 @@ onDone( async ({ data }) => {
     if (result.user.isStaff) {
       router.push('/admin/admin-dashboard');
     } else {
-      router.push('/user-dashboard');
+      router.push('/rooms');
     }
   } else {
     console.log('Login failed:', result.message);

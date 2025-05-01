@@ -1,4 +1,5 @@
 <template>
+  <UserHeaderComponent />
     <div class="rooms-container">
   
       <div class="room-cards">
@@ -20,6 +21,8 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
+import UserHeaderComponent from '@/components/UserHeader.vue'
+
 
 const router = useRouter()
 const rooms = ref([])
@@ -88,7 +91,7 @@ const viewImage = (imagePath) => {
   
   .book-btn {
     margin-top: 10px;
-    padding: 10px 16px;
+    padding: 7px 16px;
     background-color: #3A7D44;
     color: white;
     border: none;
@@ -101,23 +104,13 @@ const viewImage = (imagePath) => {
   }
 
   .view-btn {
-  margin-right: 10px;
-  padding: 10px 16px;
-  background-color: #1976D2;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.view-btn:hover {
-  background-color: #155a9a;
-}
+    color: red;
+  }
 
 .button-group {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 140px;
+  margin-top: 0px;
 }
   </style>
   

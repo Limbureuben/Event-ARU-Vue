@@ -1,12 +1,11 @@
 <template>
     <div class="rooms-container">
-      <h2>Available Rooms</h2>
   
       <div class="room-cards">
         <div v-for="room in rooms" :key="room.id" class="room-card">
           <h3>{{ room.name }}</h3>
           <p><strong>Location:</strong> {{ room.location }}</p>
-          <p><strong>Price:</strong> ${{ room.price }}</p>
+          <p><strong>Price:</strong> Tsh {{ room.price }}</p>
           <p><strong>Available Date:</strong> {{ formatDate(room.available_date) }}</p>
           <button class="book-btn" @click="bookRoom(room.id)">Book</button>
         </div>
@@ -15,34 +14,36 @@
   </template>
   
   <script setup>
-  import axios from 'axios'
-  import { ref, onMounted } from 'vue'
-  import { useRouter } from 'vue-router'
-  
-  const router = useRouter()
-  const rooms = ref([])
-  
-  const fetchAvailableRooms = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/available-rooms/') // Adjust to your endpoint
-      rooms.value = response.data
-    } catch (error) {
-      console.error('Error fetching rooms:', error)
-    }
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const rooms = ref([])
+
+const fetchAvailableRooms = async () => {
+  try {
+    const response = await fetch('http://localhost:8000/api/available-rooms/')
+    if (!response.ok) throw new Error('Failed to fetch rooms')
+    const data = await response.json()
+    rooms.value = data
+  } catch (error) {
+    console.error('Error fetching rooms:', error)
   }
-  
-  const formatDate = (date) => {
-    return new Date(date).toLocaleDateString()
-  }
-  
-  const bookRoom = (roomId) => {
-    router.push({ name: 'BookRoom', params: { id: roomId } })
-  }
-  
-  onMounted(() => {
-    fetchAvailableRooms()
-  })
-  </script>
+}
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString()
+}
+
+const bookRoom = (roomId) => {
+  router.push({ name: 'BookRoom', params: { id: roomId } })
+}
+
+onMounted(() => {
+  fetchAvailableRooms()
+})
+</script>
+
   
   <style scoped>
   .rooms-container {

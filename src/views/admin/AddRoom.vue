@@ -12,7 +12,6 @@
           required
         />
   
-        <!-- Use .form-row to make Capacity, Price, and Available Date horizontally aligned -->
         <div class="form-row">
           <v-text-field
             label="Capacity"
@@ -54,7 +53,6 @@
           />
         </div>
   
-        <!-- File input wrapper -->
         <div class="image-wrapper">
           <label for="image" class="image-label">Upload Room Image</label>
           <input
@@ -92,7 +90,7 @@
     roomName: '',
     capacity: '',
     price: '',
-    location: '',
+    location: 'ARDHI UNIVERSITY',
     available_date: '',
   })
 
@@ -107,10 +105,10 @@
 
   const onSubmit = async () => {
     const formData = new FormData();
-    formData.append('name', form.value.roomName);
+    formData.append('name', form.value.roomName.toUpperCase());
     formData.append('capacity', form.value.capacity);
     formData.append('price', form.value.price);
-    formData.append('location', form.value.location || 'Ardhi University');
+    formData.append('location', form.value.location.toUpperCase());
     formData.append('available_date', form.value.available_date);
     formData.append('image', selectedImage.value);
 

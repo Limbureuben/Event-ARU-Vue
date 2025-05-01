@@ -17,6 +17,7 @@
   <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
 
 const router = useRouter()
 const rooms = ref([])
@@ -43,6 +44,18 @@ const bookRoom = (roomId) => {
 onMounted(() => {
   fetchAvailableRooms()
 })
+
+const BASE_URL = 'http://localhost:8000'
+
+const viewImage = (imagePath) => {
+  Swal.fire({
+    title: 'Room Image',
+    imageUrl: `${BASE_URL}${imagePath}`,
+    imageWidth: 400,
+    imageHeight: 250,
+    imageAlt: 'Room image'
+  })
+}
 </script>
 
   

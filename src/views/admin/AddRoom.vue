@@ -40,6 +40,7 @@
             v-model="form.location"
             density="comfortable"
             class="form-field half"
+            readonly
             required
           />
           <v-text-field

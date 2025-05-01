@@ -102,12 +102,23 @@
 <style scoped>
 
 .add-room-page {
-  box-sizing: border-box;
-  padding: 40px 110px;
+  display: flex; /* Enable Flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Full height of the viewport */
+  /* padding: 40px; */
+  padding-left: 450px;
+  width: 150vh;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #fff;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-  width: 100%; /* Increase width to 70% */
-  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-title {
@@ -128,8 +139,6 @@
   width: 100%;
   margin-bottom: 10px;
 }
-
-
 
 .submit-btn {
   margin-top: 5px;

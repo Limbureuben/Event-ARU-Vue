@@ -34,11 +34,9 @@
             <div class="text-white">
               <h1 class="mb-3">ARDHI EVENT MANAGEMENT SYSTEM</h1>
               <h4 class="mb-3">CSM DEPARTMENT</h4>
-              <MDBBtn tag="a" lg outline="light"
-                href="#!"
-                role="button"
-                >Sign up
-              </MDBBtn>
+              <MDBBtn tag="a" lg outline="light">
+                Sign up
+                </MDBBtn>
             </div>
           </div>
         </div>

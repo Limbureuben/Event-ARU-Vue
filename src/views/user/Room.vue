@@ -7,8 +7,10 @@
           <p><strong>Location:</strong> {{ room.location }}</p>
           <p><strong>Price:</strong> Tsh {{ room.price }}</p>
           <p><strong>Available Date:</strong> {{ formatDate(room.available_date) }}</p>
-          <button class="view-btn" @click="viewImage(room.image)">View Image</button>
-          <button class="book-btn" @click="bookRoom(room.id)">Book</button>
+          <div class="button-group">
+            <button class="view-btn" @click="viewImage(room.image)">View Image</button>
+            <button class="book-btn" @click="bookRoom(room.id)">Book</button>
+          </div>
         </div>
       </div>
     </div>

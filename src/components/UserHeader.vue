@@ -1,63 +1,40 @@
 <template>
-  <MDBNavbar container expand="lg" bg="light" class="d-flex justify-content-between">
-    <MDBNavbarBrand>
-      <MDBIcon icon="gem" iconStyle="fas" size="2x" />
-    </MDBNavbarBrand>
-
-    <MDBNavbarToggler target="#navbarColor01" @click="collapse7 = !collapse7" />
-
-    <MDBCollapse id="navbarColor01" v-model="collapse7">
-      <MDBNavbarNav class="mb-2 mb-lg-0">
-        <MDBNavbarItem href="#" linkClass="link-secondary">Dashboard</MDBNavbarItem>
-        <MDBNavbarItem href="#" linkClass="link-secondary">Team</MDBNavbarItem>
-        <MDBNavbarItem href="#" linkClass="link-secondary">Projects</MDBNavbarItem>
+  <MDBNavbar expand="lg" light bg="white" container>
+    <MDBNavbarToggler
+      target="navbarExample01"
+      @click="collapse1 = !collapse1"
+    />
+    <MDBCollapse id="navbarExample01" v-model="collapse1">
+      <MDBNavbarNav>
+        <MDBNavbarItem to="/rooms" active>Home</MDBNavbarItem>
+        <MDBNavbarItem to="/profile">Profile</MDBNavbarItem>
+        <MDBNavbarItem tag="a" href="#" @click.prevent="logout">Logout</MDBNavbarItem>
+        <MDBNavbarItem to="#">Contact</MDBNavbarItem>
+        <MDBNavbarItem to="#">About</MDBNavbarItem>
       </MDBNavbarNav>
     </MDBCollapse>
-
-    <MDBNavbarNav class="mb-2 mb-lg-0 d-flex flex-row align-items-center">
-      <MDBNavbarItem to="#" class="me-3 me-lg-0" linkClass="link-secondary">
-        <MDBIcon icon="shopping-cart" />
-      </MDBNavbarItem>
-
-      <MDBNavbarItem to="#" class="me-3 me-lg-0" linkClass="link-secondary">
-        <MDBIcon icon="bell" />
-        <MDBBadge notification color="danger" pill>1</MDBBadge>
-      </MDBNavbarItem>
-
-      <MDBDropdown>
-        <MDBDropdownToggle tag="a" class="nav-link" role="button">
-          <img
-            src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
-            class="rounded-circle"
-            height="32"
-            alt="Profile"
-            loading="lazy"
-          />
-        </MDBDropdownToggle>
-        <MDBDropdownMenu>
-          <MDBDropdownItem>Profile</MDBDropdownItem>
-          <MDBDropdownItem>Settings</MDBDropdownItem>
-          <MDBDropdownItem>Logout</MDBDropdownItem>
-        </MDBDropdownMenu>
-      </MDBDropdown>
-    </MDBNavbarNav>
   </MDBNavbar>
 </template>
 
 <script setup lang="ts">
-  import { MDBNavbar, MDBNavbarItem,
-  MDBNavbarBrand,
-  MDBNavbarNav,
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { toast } from 'vue3-toastify';
+import {
+  MDBNavbar,
   MDBNavbarToggler,
-  MDBBadge,
-  MDBIcon,
+  MDBNavbarNav,
+  MDBNavbarItem,
   MDBCollapse,
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem
 } from 'mdb-vue-ui-kit';
-  import { ref } from "vue";
 
-  const collapse7 = ref(false);
+const collapse1 = ref(false);
+const router = useRouter();
+
+const logout = async () => {
+  localStorage.removeItem('token');
+  toast.success('Logout successful!');
+  await new Promise(resolve => setTimeout(resolve, 1500)); // match toast duration
+  router.push('/login');
+};
 </script>

@@ -3,7 +3,7 @@
     <div class="register-overlay">
       <transition name="fade-slide">
         <div v-if="visible" class="register-container">
-          <p class="country-name">ARDHI EVENT SYSTEM</p>
+          <img src="/public/images/ardhi.png" alt="Event System Logo" class="logo" />
 
           <form @submit.prevent="onSubmit" autocomplete="off">
             <div class="full-width custom-input">
@@ -241,6 +241,13 @@ onMounted(() => {
   opacity: 1;
   transform: translateY(0);
 }
+
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
 
   </style>
   

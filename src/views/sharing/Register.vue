@@ -2,7 +2,7 @@
   <div class="register-background">
     <div class="register-overlay">
       <div class="register-container">
-        <p class="country-name">ARDHI EVENT SYSTEM</p>
+        <img src="/public/images/ardhi.png" alt="Event System Logo" class="logo" />
 
         <!-- Animate the form -->
         <transition name="fade-slide">
@@ -245,5 +245,10 @@ import { on } from 'events';
   transform: translateY(30px);
 }
 
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 10px;
+}
   </style>
   

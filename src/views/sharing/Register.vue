@@ -42,8 +42,8 @@
   import { useMutation } from '@vue/apollo-composable';
   import REGISTER_USER from '@/graphql/registerUser.graphql'
   import { toast } from 'vue3-toastify';
-import router from '@/router';
-import { on } from 'events';
+  import router from '@/router';
+  import { on } from 'events';
   
   const form = ref({
     username: '',

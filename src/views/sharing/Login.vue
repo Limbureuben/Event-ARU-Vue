@@ -54,7 +54,7 @@ onDone( async ({ data }) => {
   if (result.success && result.token) {
     localStorage.setItem('token', result.token);
     toast.success('Login successful!');
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     if (result.user.isStaff) {
       router.push('/admin/admin-dashboard');

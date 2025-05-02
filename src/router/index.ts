@@ -10,12 +10,14 @@ import AddRoom from '@/views/admin/AddRoom.vue';
 import Sidebar from '@/views/admin/Sidebar.vue';
 import Room from '@/views/user/Room.vue';
 import UserProfile from '@/views/user/UserProfile.vue';
+import BookRoom from '@/views/user/BookRoom.vue';
 
 const routes = [
   { path: '/', component: Login },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/rooms', component: Room },
+  { path: '/bookroom/:id', component: BookRoom, name: 'BookRoom' },
   { path: '/profile', component: UserProfile},
   {
     path: '/admin',

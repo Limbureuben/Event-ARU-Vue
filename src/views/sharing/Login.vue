@@ -57,7 +57,7 @@ onDone( async ({ data }) => {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     if (result.user.isStaff) {
-      router.push('/admin/admin-dashboard');
+      router.push('/admin-dashboard');
     } else {
       router.push('/rooms');
     }

@@ -11,6 +11,7 @@ import Sidebar from '@/views/admin/Sidebar.vue';
 import Room from '@/views/user/Room.vue';
 import UserProfile from '@/views/user/UserProfile.vue';
 import BookRoom from '@/views/user/BookRoom.vue';
+import { compact } from '@apollo/client/utilities';
 
 const routes = [
   { path: '/', component: Login },
@@ -19,20 +20,7 @@ const routes = [
   { path: '/rooms', component: Room },
   { path: '/bookroom/:id', component: BookRoom, name: 'BookRoom' },
   { path: '/profile', component: UserProfile},
-  {
-    path: '/admin',
-    component: Sidebar,
-    children: [
-      {
-        path: 'admin-dashboard',
-        component: AdminDashboard,
-      },
-      {
-        path: 'add-room',
-        component: AddRoom,
-      },
-    ],
-  },
+  { path: '/admin-dashboard', component: AdminDashboard},
   { path: '/user-dashboard', component: UserDashboard },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ]

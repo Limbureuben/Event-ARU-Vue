@@ -23,9 +23,19 @@ import { ref, onMounted } from 'vue'
 
 const bookings = ref([])
 
+// Replace this with your actual token logic (localStorage, Vuex, etc.)
+const token = localStorage.getItem('authToken')  // Or your auth storage key
+
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:8000/api/booked-event-rooms/') // Update with your actual API endpoint
+    const response = await fetch('http://localhost:8000/api/booked-event-rooms/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  // Use 'Token' if using DRF TokenAuth
+      }
+    })
+
     if (!response.ok) throw new Error('Failed to fetch bookings')
     bookings.value = await response.json()
   } catch (error) {
@@ -33,3 +43,4 @@ onMounted(async () => {
   }
 })
 </script>
+

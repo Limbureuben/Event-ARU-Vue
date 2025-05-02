@@ -31,67 +31,73 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
-  import { useRouter } from 'vue-router'
-  import Swal from 'sweetalert2'
-  import UserHeaderComponent from '@/components/UserHeader.vue'
-  
-  // Get the room ID from the route params
-  const router = useRouter()
-  const roomId = router.currentRoute.value.params.id
-  
-  const username = ref('')
-  const email = ref('')
-  const phone = ref('')
-  const eventDate = ref('')
-  
-  // Submit booking details
-  const submitBooking = async () => {
-    try {
-        const response = await fetch(`http://localhost:8000/api/booking-events/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            user_details: {
-            username: username.value,
-            email: email.value,
-            phone: phone.value,
-            },
-            room: roomId,
-            event_date: eventDate.value,
-        }),
-        })
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+import UserHeaderComponent from '@/components/UserHeader.vue'
 
-  
-      if (!response.ok) {
-        throw new Error('Booking failed')
-      }
-  
-      const data = await response.json()
-  
-      // Show success message
-      Swal.fire({
-        title: 'Booking Confirmed!',
-        text: `Your booking has been confirmed. A payment PDF has been sent to your email.`,
-        icon: 'success',
-        confirmButtonColor: '#3085d6',
-      })
-  
-      // Optionally, navigate to a confirmation page or reset the form
-      router.push({ name: 'BookingConfirmation' })
-    } catch (error) {
-      console.error('Error submitting booking:', error)
-      Swal.fire({
-        title: 'Booking Error',
-        text: 'An error occurred while processing your booking.',
-        icon: 'error',
-        confirmButtonColor: '#d33',
-      })
+const router = useRouter()
+const roomId = router.currentRoute.value.params.id
+
+const username = ref('')
+const email = ref('')
+const phone = ref('')
+const eventDate = ref('')
+
+// Submit booking details
+const submitBooking = async () => {
+  try {
+    const response = await fetch(`http://localhost:8000/api/booking-events/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_details: {
+          username: username.value,
+          email: email.value,
+          phone: phone.value,
+        },
+        room: roomId,
+        event_date: eventDate.value,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error('Booking failed')
     }
+
+    const data = await response.json()
+
+    // Show success message and wait for confirmation
+    await Swal.fire({
+      title: 'Booking Confirmed!',
+      text: `Your booking has been confirmed. A payment PDF has been sent to your email.`,
+      icon: 'success',
+      confirmButtonColor: '#3085d6',
+    })
+
+    // Reset the form
+    username.value = ''
+    email.value = ''
+    phone.value = ''
+    eventDate.value = ''
+
+    // Navigate to /rooms
+    router.push('/rooms')
+
+  } catch (error) {
+    console.error('Error submitting booking:', error)
+    Swal.fire({
+      title: 'Booking Error',
+      text: 'An error occurred while processing your booking.',
+      icon: 'error',
+      confirmButtonColor: '#d33',
+    })
   }
-  </script>
+}
+</script>
+
   
   <style scoped>
   .booking-form-container {

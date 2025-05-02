@@ -48,18 +48,22 @@
   // Submit booking details
   const submitBooking = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/book-room/${roomId}/`, {
+        const response = await fetch(`http://localhost:8000/api/booking-events/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: username.value,
-          email: email.value,
-          phone: phone.value,
-          event_date: eventDate.value,
+            user_details: {
+            username: username.value,
+            email: email.value,
+            phone: phone.value,
+            },
+            room: roomId,
+            event_date: eventDate.value,
         }),
-      })
+        })
+
   
       if (!response.ok) {
         throw new Error('Booking failed')

@@ -1,4 +1,5 @@
 <template>
+    <BackgroundLayout>
   <div class="register-background">
     <div class="register-overlay">
       <transition name="fade-slide">
@@ -28,6 +29,7 @@
       </transition>
     </div>
   </div>
+</BackgroundLayout>
 </template>
 
 
@@ -37,6 +39,7 @@ import { useRouter } from 'vue-router';
 import { useMutation } from '@vue/apollo-composable';
 import { toast } from 'vue3-toastify';
 import LOGIN_USER from '@/graphql/loginUser.graphql';
+import BackgroundLayout from '@/components/BackgroundLayout.vue';
 
 const router = useRouter();
 
@@ -94,8 +97,7 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('/public//images/ardhi.jpeg') no-repeat center center fixed;
-    background-size: cover;
+
   }
   
   /* Overlay for a clean look */
@@ -103,7 +105,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 110%;
+    width: 100%;
     background: rgba(0, 0, 0, 0.5);
     height: 100%;
     padding: 20px;
@@ -171,7 +173,7 @@ onMounted(() => {
     color: #fff;
     background-color: rgb(100, 100, 177);
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     width: 100%;
     cursor: pointer;
     transition: background-color 0.3s ease;

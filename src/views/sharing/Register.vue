@@ -1,9 +1,10 @@
 <template>
+      <BackgroundLayout>
   <div class="register-background">
     <div class="register-overlay">
       <div class="register-container">
         <img src="/public/images/ardhi.png" alt="Event System Logo" class="logo" />
-        <div class="system-title">ARU EVENT SYSTEM</div>
+        <div class="system-title">ARU EVENT MANAGEMENT SYSTEM</div>
         <!-- Animate the form -->
         <transition name="fade-slide">
           <form v-if="showForm" @submit.prevent="onSubmit">
@@ -28,6 +29,7 @@
       </div>
     </div>
   </div>
+</BackgroundLayout>
 </template>
 
   
@@ -38,6 +40,7 @@
   import { toast } from 'vue3-toastify';
   import router from '@/router';
   import { on } from 'events';
+  import BackgroundLayout from '@/components/BackgroundLayout.vue';
   
   const form = ref({
     username: '',
@@ -89,8 +92,6 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('/public//images/ardhi.jpeg') no-repeat center center fixed;
-    background-size: cover;
   }
   
   /* Overlay for a clean look */
@@ -165,7 +166,7 @@
     color: #fff;
     background-color: rgb(100, 100, 177);
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     width: 100%;
     cursor: pointer;
     transition: background-color 0.3s ease;

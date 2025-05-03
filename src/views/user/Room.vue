@@ -1,113 +1,118 @@
 <template>
   <UserHeaderComponent />
   <BackgroundLayout>
-    <div class="rooms-container">
-      <TransitionGroup name="fade-slide" tag="div" class="room-cards">
+  <div class="rooms-container">
+    <TransitionGroup name="fade-slide" tag="div" class="room-cards">
         <div v-for="room in paginatedRooms" :key="room.id" class="room-card">
-          <h3>{{ room.name }}</h3>
-          <p><strong>Location:</strong> {{ room.location }}</p>
-          <p><strong>Price:</strong> Tsh {{ room.price }}</p>
-          <p><strong>Available Date:</strong> {{ formatDate(room.available_date) }}</p>
-          <div class="button-group">
-            <button class="view-btn" @click="viewImage(room.image)">View Image</button>
-            <button 
-              class="book-btn" 
-              :disabled="!room.is_available"
-              @click="bookRoom(room.id)"
-              :class="{ 'unavailable': !room.is_available }">
-              {{ room.is_available ? 'Book' : 'Unavailable' }}
-            </button>
-          </div>
+        <h3>{{ room.name }}</h3>
+        <p><strong>Location:</strong> {{ room.location }}</p>
+        <p><strong>Price:</strong> Tsh {{ room.price }}</p>
+        <p><strong>Available Date:</strong> {{ formatDate(room.available_date) }}</p>
+        <div class="button-group">
+          <button class="view-btn" @click="viewImage(room.image)">View Image</button>
+          <button 
+            class="book-btn" 
+            :disabled="!room.is_available"
+            @click="bookRoom(room.id)"
+            :class="{ 'unavailable': !room.is_available }">
+            {{ room.is_available ? 'Book' : 'Unavailable' }}
+          </button>
         </div>
-      </TransitionGroup>
+      </div>
+    </TransitionGroup>
+    <div class="pagination">
+      <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Prev</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Next</button>
     </div>
 
-    <!-- Pagination Component -->
-    <AppPagination
-      v-model="currentPage"
-      :total-pages="pageCount"
-    />
-  </BackgroundLayout>
+  </div>
+</BackgroundLayout>
 </template>
 
-
   
-<script setup>
-import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import Swal from 'sweetalert2'
-import UserHeaderComponent from '@/components/UserHeader.vue'
-import BackgroundLayout from '@/components/BackgroundLayout.vue'
-import AppPagination from '@/components/Pagination.vue'
+  <script setup>
+  import { ref, onMounted, computed } from 'vue'
+  import { useRouter } from 'vue-router'
+  import Swal from 'sweetalert2'
+  import UserHeaderComponent from '@/components/UserHeader.vue'
+  import BackgroundLayout from '@/components/BackgroundLayout.vue'
+  
+  const router = useRouter()
+  const rooms = ref([])
+  
+  // Fetch rooms from the backend
+  const fetchAvailableRooms = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/available-rooms/')
+      if (!response.ok) throw new Error('Failed to fetch rooms')
+      const data = await response.json()
+      rooms.value = data
+    } catch (error) {
+      console.error('Error fetching rooms:', error)
+    }
+  }
+  
+  // Format the available date of the room
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString()
+  }
+  
+  // Booking logic
+  const bookRoom = (roomId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You are about to start the booking process.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, proceed!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Navigate to the booking page
+        router.push({ name: 'BookRoom', params: { id: roomId } })
+      }
+    })
+  }
+  
+  // Fetch available rooms on component mount
+  onMounted(() => {
+    fetchAvailableRooms()
+  })
+  
+  const BASE_URL = 'http://localhost:8000'
+  
+  // Display room image in a SweetAlert modal
+  const viewImage = (imagePath) => {
+    Swal.fire({
+      title: 'Room Image',
+      imageUrl: `${BASE_URL}${imagePath}`,
+      imageWidth: 400,
+      imageHeight: 250,
+      imageAlt: 'Room image'
+    })
+  }
 
-const router = useRouter()
-const rooms = ref([])              // All rooms from backend
-const currentPage = ref(1)         // Current page
-const pageSize = 6                 // Number of rooms per page
+const currentPage = ref(1)
+const itemsPerPage = 6
 
-// Computed property to slice rooms for current page
 const paginatedRooms = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  const end = start + pageSize
-  return rooms.value.slice(start, end)
+  const start = (currentPage.value - 1) * itemsPerPage
+  return rooms.value.slice(start, start + itemsPerPage)
 })
 
-// Total page count
-const pageCount = computed(() => {
-  return Math.ceil(rooms.value.length / pageSize)
+const totalPages = computed(() => {
+  return Math.ceil(rooms.value.length / itemsPerPage)
 })
 
-// Fetch all rooms once
-const fetchAvailableRooms = async () => {
-  try {
-    const response = await fetch('http://localhost:8000/api/available-rooms/')
-    if (!response.ok) throw new Error('Failed to fetch rooms')
-    const data = await response.json()
-    rooms.value = data
-  } catch (error) {
-    console.error('Error fetching rooms:', error)
+const goToPage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
   }
 }
 
-onMounted(() => {
-  fetchAvailableRooms()
-})
-
-// Format date
-const formatDate = (date) => {
-  return new Date(date).toLocaleDateString()
-}
-
-// Booking function
-const bookRoom = (roomId) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You are about to start the booking process.",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, proceed!"
-  }).then((result) => {
-    if (result.isConfirmed) {
-      router.push({ name: 'BookRoom', params: { id: roomId } })
-    }
-  })
-}
-
-// View image
-const BASE_URL = 'http://localhost:8000'
-const viewImage = (imagePath) => {
-  Swal.fire({
-    title: 'Room Image',
-    imageUrl: `${BASE_URL}${imagePath}`,
-    imageWidth: 400,
-    imageHeight: 250,
-    imageAlt: 'Room image'
-  })
-}
-</script>
-
+  </script>
   
   <style scoped>
   .rooms-container {
@@ -120,6 +125,7 @@ const viewImage = (imagePath) => {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
+
   }
   
   .room-card {
@@ -128,8 +134,16 @@ const viewImage = (imagePath) => {
     border-radius: 4px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
+    height: 220px;
+    max-height: 500px;
+
   }
   
+  .room-card p {
+  margin: 2px 0;
+  font-size: 14px;
+}
+
   .room-card:hover {
     transform: translateY(-5px);
   }
@@ -175,5 +189,26 @@ const viewImage = (imagePath) => {
   transform: translateY(0);
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+.pagination button {
+  padding: 6px 8px;
+  background-color: #6464b1;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
   </style>
   

@@ -68,103 +68,99 @@
   
 
   <script setup>
-  import { ref, onMounted, watch } from 'vue'
-  import { useRouter } from 'vue-router'
-  import UserHeaderComponent from '@/components/UserHeader.vue'
-  import Swal from 'sweetalert2'
-  
-  const router = useRouter()
-  const roomId = router.currentRoute.value.params.id
-  
-  // Define the form object as a ref
-  const form = ref({
-    username: '',
-    email: '',
-    phone: '',
-    event_date: '',
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import UserHeaderComponent from '@/components/UserHeader.vue'
+import Swal from 'sweetalert2'
+
+const router = useRouter()
+const roomId = router.currentRoute.value.params.id
+
+// Define the form object as a ref
+const form = ref({
+  username: '',
+  email: '',
+  phone: '',
+  event_date: '',
+})
+
+const showForm = ref(false)
+
+// Function to handle form submission
+const onSubmit = async () => {
+  // Log the payload to check what is being sent
+  console.log('Booking payload:', {
+    user_details: {
+      username: form.value.username,
+      email: form.value.email,
+      phone: form.value.phone,
+    },
+    room: roomId,
+    event_date: form.value.event_date,
   })
-  
-  const showForm = ref(false)
-  
-  // Automatically convert username to uppercase when typing
-  watch(() => form.value.username, (newVal) => {
-    form.value.username = newVal.toUpperCase()
-  })
-  
-  // Function to handle form submission
-  const onSubmit = async () => {
-    // Log the payload to check what is being sent
-    console.log('Booking payload:', {
-      user_details: {
-        username: form.value.username,
-        email: form.value.email,
-        phone: form.value.phone,
+
+  try {
+    const response = await fetch('http://localhost:8000/api/booking-events/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-      room: roomId,
-      event_date: form.value.event_date,
-    })
-  
-    try {
-      const response = await fetch('http://localhost:8000/api/booking-events/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+      body: JSON.stringify({
+        user_details: {
+          username: form.value.username,
+          email: form.value.email,
+          phone: form.value.phone,
         },
-        body: JSON.stringify({
-          user_details: {
-            username: form.value.username,
-            email: form.value.email,
-            phone: form.value.phone,
-          },
-          room: roomId,
-          event_date: form.value.event_date,
-        }),
-      })
-  
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || 'Server error')
-      }
-  
-      // Success message
-      await Swal.fire({
-        title: 'Booking Confirmed!',
-        text: 'Your booking has been confirmed. A payment PDF has been sent to your email.',
-        icon: 'success',
-        confirmButtonColor: '#3085d6',
-      })
-  
-      // Reset the form
-      form.value = {
-        username: '',
-        email: '',
-        phone: '',
-        event_date: '',
-      }
-  
-      // Navigate to the rooms page
-      router.push('/rooms')
-    } catch (error) {
-      console.error('Error submitting booking:', error)
-  
-      // Show error message if something goes wrong
-      Swal.fire({
-        title: 'Booking Error',
-        text: 'An error occurred while processing your booking.',
-        icon: 'error',
-        confirmButtonColor: '#d33',
-      })
+        room: roomId,
+        event_date: form.value.event_date,
+      }),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.message || 'Server error')
     }
+
+    // Success message
+    await Swal.fire({
+      title: 'Booking Confirmed!',
+      text: 'Your booking has been confirmed. A payment PDF has been sent to your email.',
+      icon: 'success',
+      confirmButtonColor: '#3085d6',
+    })
+
+    // Reset the form
+    form.value = {
+      username: '',
+      email: '',
+      phone: '',
+      event_date: '',
+    }
+
+    // Navigate to the rooms page
+    router.push('/rooms')
+  } catch (error) {
+    console.error('Error submitting booking:', error)
+
+    // Show error message if something goes wrong
+    Swal.fire({
+      title: 'Booking Error',
+      text: 'An error occurred while processing your booking.',
+      icon: 'error',
+      confirmButtonColor: '#d33',
+    })
   }
-  
-  // Set the form visibility after the component is mounted
-  onMounted(() => {
-    setTimeout(() => {
-      showForm.value = true
-    }, 50)
-  })
-  </script>
+}
+
+// Set the form visibility after the component is mounted
+onMounted(() => {
+  setTimeout(() => {
+    showForm.value = true
+  }, 50)
+})
+</script>
+
   
 <style scoped>
 

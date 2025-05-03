@@ -1,32 +1,25 @@
-   <template>
-    <UserHeaderComponent />
+<template>
+    <AdminHeaderComponent />
     <div class="rooms-container">
       <div class="room-cards">
         <div v-for="room in rooms" :key="room.id" class="room-card">
           <h3>{{ room.name }}</h3>
           <p><strong>Location:</strong> {{ room.location }}</p>
-          <p><strong>Price:</strong> Tsh {{ room.price }}</p>
           <p><strong>Available Date:</strong> {{ formatDate(room.available_date) }}</p>
+
           <div class="button-group">
-            <button class="view-btn" @click="viewImage(room.image)">View Image</button>
-            <button 
-              class="book-btn" 
-              :disabled="!room.is_available"
-              @click="bookRoom(room.id)"
-              :class="{ 'unavailable': !room.is_available }">
-              {{ room.is_available ? 'Book' : 'Unavailable' }}
-            </button>
+            <button class="book-btn" @click="activateRoom(room.id)">Activate Room</button>
+          </div>
           </div>
         </div>
       </div>
-    </div>
   </template>
   
   <script setup>
   import { ref, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
   import Swal from 'sweetalert2'
-  import UserHeaderComponent from '@/components/UserHeader.vue'
+  import AdminHeaderComponent from '@/components/AdminHeader.vue'
   
   const router = useRouter()
   const rooms = ref([])
@@ -34,7 +27,7 @@
   // Fetch rooms from the backend
   const fetchAvailableRooms = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/available-rooms/')
+      const response = await fetch('http://localhost:8000/api/inactive-rooms/')
       if (!response.ok) throw new Error('Failed to fetch rooms')
       const data = await response.json()
       rooms.value = data
@@ -83,6 +76,37 @@
       imageAlt: 'Room image'
     })
   }
+
+  const activateRoom = async (roomId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/activate-room/${roomId}/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ is_available: true })
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to activate room')
+    }
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Room activated successfully'
+    })
+
+    fetchAvailableRooms() // Refresh list
+  } catch (error) {
+    console.error('Error activating room:', error)
+    Swal.fire({
+      icon: 'error',
+      title: 'Activation failed',
+      text: error.message
+    })
+  }
+}
+
   </script>
   
   <style scoped>

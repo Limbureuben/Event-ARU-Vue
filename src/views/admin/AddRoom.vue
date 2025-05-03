@@ -1,4 +1,5 @@
 <template>
+  <AdminHeaderComponent />
     <div class="add-room-page">
       <form @submit.prevent="onSubmit" class="form-container" autocomplete="off">
         <h2 class="form-title">Add Event Room</h2>
@@ -83,6 +84,7 @@
   import { ref } from 'vue';
   import { toast } from 'vue3-toastify';
   import { useRouter } from 'vue-router';
+  import AdminHeaderComponent from '@/components/AdminHeader.vue';
 
   const router = useRouter();
 

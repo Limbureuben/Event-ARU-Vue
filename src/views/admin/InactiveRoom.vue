@@ -1,83 +1,61 @@
 <template>
-    <AdminHeaderComponent />
-    <div class="rooms-container">
-      <div class="room-cards">
-        <div v-for="room in rooms" :key="room.id" class="room-card">
-          <h3>{{ room.name }}</h3>
-          <p><strong>Location:</strong> {{ room.location }}</p>
-          <p><strong>Available Date:</strong> {{ formatDate(room.available_date) }}</p>
-
-          <div class="button-group">
-            <button class="book-btn" @click="activateRoom(room.id)">Activate Room</button>
-          </div>
-          </div>
+  <AdminHeaderComponent />
+  <div class="rooms-container">
+    <div class="room-cards">
+      <div v-for="room in rooms" :key="room.id" class="room-card">
+        <h3>{{ room.name }}</h3>
+        <p><strong>Location:</strong> {{ room.location }}</p>
+        <p><strong>Booked Date:</strong> {{ formatDate(room.available_date) }}</p>
+        <div class="button-group">
+          <button class="book-btn" @click="activateRoom(room.id)">Activate Room</button>
         </div>
       </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue'
-  import { useRouter } from 'vue-router'
-  import Swal from 'sweetalert2'
-  import AdminHeaderComponent from '@/components/AdminHeader.vue'
-  
-  const router = useRouter()
-  const rooms = ref([])
-  
-  // Fetch rooms from the backend
-  const fetchAvailableRooms = async () => {
-    try {
-      const response = await fetch('http://localhost:8000/api/inactive-rooms/')
-      if (!response.ok) throw new Error('Failed to fetch rooms')
-      const data = await response.json()
-      rooms.value = data
-    } catch (error) {
-      console.error('Error fetching rooms:', error)
-    }
-  }
-  
-  // Format the available date of the room
-  const formatDate = (date) => {
-    return new Date(date).toLocaleDateString()
-  }
-  
-  // Booking logic
-  const bookRoom = (roomId) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You are about to start the booking process.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, proceed!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Navigate to the booking page
-        router.push({ name: 'BookRoom', params: { id: roomId } })
-      }
-    })
-  }
-  
-  // Fetch available rooms on component mount
-  onMounted(() => {
-    fetchAvailableRooms()
-  })
-  
-  const BASE_URL = 'http://localhost:8000'
-  
-  // Display room image in a SweetAlert modal
-  const viewImage = (imagePath) => {
-    Swal.fire({
-      title: 'Room Image',
-      imageUrl: `${BASE_URL}${imagePath}`,
-      imageWidth: 400,
-      imageHeight: 250,
-      imageAlt: 'Room image'
-    })
-  }
+    </div>
+  </div>
+</template>
 
-  const activateRoom = async (roomId) => {
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+import AdminHeaderComponent from '@/components/AdminHeader.vue'
+
+const router = useRouter()
+const rooms = ref([])
+
+const BASE_URL = 'http://localhost:8000'
+
+// Fetch rooms from the backend
+const fetchAvailableRooms = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/inactive-rooms/`)
+    if (!response.ok) throw new Error('Failed to fetch rooms')
+    const data = await response.json()
+    rooms.value = data
+  } catch (error) {
+    console.error('Error fetching rooms:', error)
+  }
+}
+
+// Format the available date of the room
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString()
+}
+
+// Confirm before activating a room
+const activateRoom = async (roomId) => {
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "This will activate the room and make it available for booking.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3A7D44",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, activate it!"
+  })
+
+  if (!result.isConfirmed) return
+
   try {
     const response = await fetch(`${BASE_URL}/api/activate-room/${roomId}/`, {
       method: 'PATCH',
@@ -87,16 +65,14 @@
       body: JSON.stringify({ is_available: true })
     })
 
-    if (!response.ok) {
-      throw new Error('Failed to activate room')
-    }
+    if (!response.ok) throw new Error('Failed to activate room')
 
     Swal.fire({
       icon: 'success',
       title: 'Room activated successfully'
     })
 
-    fetchAvailableRooms() // Refresh list
+    fetchAvailableRooms()
   } catch (error) {
     console.error('Error activating room:', error)
     Swal.fire({
@@ -107,60 +83,53 @@
   }
 }
 
-  </script>
-  
-  <style scoped>
-  .rooms-container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-  }
-  
-  .room-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-  }
-  
-  .room-card {
-    background: #fff;
-    padding: 16px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-  }
-  
-  .room-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .book-btn {
-    margin-top: 10px;
-    padding: 7px 16px;
-    background-color: #3A7D44;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .book-btn:hover {
-    background-color: #2a5b30;
-  }
-  
-  .book-btn.unavailable {
-    background-color: #d33;
-    cursor: not-allowed;
-  }
-  
-  .view-btn {
-    color: red;
-  }
-  
-  .button-group {
-    display: flex;
-    gap: 140px;
-    margin-top: 0px;
-  }
-  </style>
-  
+onMounted(() => {
+  fetchAvailableRooms()
+})
+</script>
+
+<style scoped>
+.rooms-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.room-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.room-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  transition: transform 0.2s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-5px);
+}
+
+.book-btn {
+  margin-top: 10px;
+  padding: 7px 16px;
+  background-color: #3A7D44;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.book-btn:hover {
+  background-color: #2a5b30;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+</style>

@@ -1,26 +1,27 @@
-   <template>
-    <UserHeaderComponent />
-    <div class="rooms-container">
-      <div class="room-cards">
-        <div v-for="room in rooms" :key="room.id" class="room-card">
-          <h3>{{ room.name }}</h3>
-          <p><strong>Location:</strong> {{ room.location }}</p>
-          <p><strong>Price:</strong> Tsh {{ room.price }}</p>
-          <p><strong>Available Date:</strong> {{ formatDate(room.available_date) }}</p>
-          <div class="button-group">
-            <button class="view-btn" @click="viewImage(room.image)">View Image</button>
-            <button 
-              class="book-btn" 
-              :disabled="!room.is_available"
-              @click="bookRoom(room.id)"
-              :class="{ 'unavailable': !room.is_available }">
-              {{ room.is_available ? 'Book' : 'Unavailable' }}
-            </button>
-          </div>
+<template>
+  <UserHeaderComponent />
+  <div class="rooms-container">
+    <TransitionGroup name="fade-slide" tag="div" class="room-cards">
+      <div v-for="room in rooms" :key="room.id" class="room-card">
+        <h3>{{ room.name }}</h3>
+        <p><strong>Location:</strong> {{ room.location }}</p>
+        <p><strong>Price:</strong> Tsh {{ room.price }}</p>
+        <p><strong>Available Date:</strong> {{ formatDate(room.available_date) }}</p>
+        <div class="button-group">
+          <button class="view-btn" @click="viewImage(room.image)">View Image</button>
+          <button 
+            class="book-btn" 
+            :disabled="!room.is_available"
+            @click="bookRoom(room.id)"
+            :class="{ 'unavailable': !room.is_available }">
+            {{ room.is_available ? 'Book' : 'Unavailable' }}
+          </button>
         </div>
       </div>
-    </div>
-  </template>
+    </TransitionGroup>
+  </div>
+</template>
+
   
   <script setup>
   import { ref, onMounted } from 'vue'
@@ -138,5 +139,18 @@
     gap: 140px;
     margin-top: 0px;
   }
+
+  .fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.fade-slide-enter-active {
+  transition: all 0.5s ease;
+}
+.fade-slide-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
   </style>
   

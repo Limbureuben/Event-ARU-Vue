@@ -28,7 +28,7 @@ const BASE_URL = 'http://localhost:8000'
 // Fetch rooms from the backend
 const fetchAvailableRooms = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/api/inactive-rooms/`)
+    const response = await fetch(`${BASE_URL}`)
     if (!response.ok) throw new Error('Failed to fetch rooms')
     const data = await response.json()
     rooms.value = data

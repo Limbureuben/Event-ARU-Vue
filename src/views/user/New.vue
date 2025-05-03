@@ -1,274 +1,164 @@
 <template>
     <UserHeaderComponent />
-    <div class="add-room-page">
-      <transition name="fade-slide">
-        <form
-          v-if="showForm"
-          @submit.prevent="onSubmit"
-          class="form-container"
-          autocomplete="off"
-        >
-          <h2 class="form-title">Book Event</h2>
-  
-          <v-text-field
-            label="Username"
-            v-model="form.username"
-            variant="outlined"
-            density="comfortable"
-            class="form-field"
-            required
-          />
-  
-          <div class="form-row">
-            <v-text-field
-              label="Email"
-              type="email"
-              v-model="form.email"
-              variant="outlined"
-              density="comfortable"
-              class="form-field half"
-              required
-            />
-            <v-text-field
-              label="Phone number"
-              type="tel"
-              v-model="form.phone"
-              variant="outlined"
-              density="comfortable"
-              class="form-field half"
-              required
-            />
+    <BackgroundLayout>
+    <div class="rooms-container">
+      <TransitionGroup name="fade-slide" tag="div" class="room-cards">
+        <div v-for="room in rooms" :key="room.id" class="room-card">
+          <h3>{{ room.name }}</h3>
+          <p><strong>Location:</strong> {{ room.location }}</p>
+          <p><strong>Price:</strong> Tsh {{ room.price }}</p>
+          <p><strong>Available Date:</strong> {{ formatDate(room.available_date) }}</p>
+          <div class="button-group">
+            <button class="view-btn" @click="viewImage(room.image)">View Image</button>
+            <button 
+              class="book-btn" 
+              :disabled="!room.is_available"
+              @click="bookRoom(room.id)"
+              :class="{ 'unavailable': !room.is_available }">
+              {{ room.is_available ? 'Book' : 'Unavailable' }}
+            </button>
           </div>
-  
-          <div class="form-row">
-            <v-text-field
-              label="Event Date"
-              type="date"
-              v-model="form.event_date"
-              variant="outlined"
-              density="comfortable"
-              class="form-field half"
-              required
-            />
-          </div>
-  
-          <v-btn
-            style="background-color: #3A7D44; color: white"
-            variant="flat"
-            class="submit-btn"
-            type="submit"
-            block
-          >
-            Book Room
-          </v-btn>
-        </form>
-      </transition>
+        </div>
+      </TransitionGroup>
     </div>
+    <AppPagination
+      v-model="currentPage"
+      :total-pages="pageCount"
+    />
+  </BackgroundLayout>
   </template>
   
-
-  <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import UserHeaderComponent from '@/components/UserHeader.vue'
-import Swal from 'sweetalert2'
-
-const router = useRouter()
-const roomId = router.currentRoute.value.params.id
-
-// Define the form object as a ref
-const form = ref({
-  username: '',
-  email: '',
-  phone: '',
-  event_date: '',
-})
-
-const showForm = ref(false)
-
-// Function to handle form submission
-const onSubmit = async () => {
-  // Log the payload to check what is being sent
-  console.log('Booking payload:', {
-    user_details: {
-      username: form.value.username,
-      email: form.value.email,
-      phone: form.value.phone,
-    },
-    room: roomId,
-    event_date: form.value.event_date,
-  })
-
-  try {
-    const response = await fetch('http://localhost:8000/api/booking-events/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({
-        user_details: {
-          username: form.value.username,
-          email: form.value.email,
-          phone: form.value.phone,
-        },
-        room: roomId,
-        event_date: form.value.event_date,
-      }),
-    })
-
-    if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(errorData.message || 'Server error')
+    
+    <script setup>
+    import { ref, onMounted } from 'vue'
+    import { useRouter } from 'vue-router'
+    import Swal from 'sweetalert2'
+    import UserHeaderComponent from '@/components/UserHeader.vue'
+    import BackgroundLayout from '@/components/BackgroundLayout.vue'
+    import AppPagination from '@/components/Pagination.vue'
+    
+    const router = useRouter()
+    const rooms = ref([])
+    
+    // Fetch rooms from the backend
+    const fetchAvailableRooms = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/available-rooms/')
+        if (!response.ok) throw new Error('Failed to fetch rooms')
+        const data = await response.json()
+        rooms.value = data
+      } catch (error) {
+        console.error('Error fetching rooms:', error)
+      }
     }
-
-    // Success message
-    await Swal.fire({
-      title: 'Booking Confirmed!',
-      text: 'Your booking has been confirmed. A payment PDF has been sent to your email.',
-      icon: 'success',
-      confirmButtonColor: '#3085d6',
-    })
-
-    // Reset the form
-    form.value = {
-      username: '',
-      email: '',
-      phone: '',
-      event_date: '',
+    
+    // Format the available date of the room
+    const formatDate = (date) => {
+      return new Date(date).toLocaleDateString()
     }
-
-    // Navigate to the rooms page
-    router.push('/rooms')
-  } catch (error) {
-    console.error('Error submitting booking:', error)
-
-    // Show error message if something goes wrong
-    Swal.fire({
-      title: 'Booking Error',
-      text: 'An error occurred while processing your booking.',
-      icon: 'error',
-      confirmButtonColor: '#d33',
+    
+    // Booking logic
+    const bookRoom = (roomId) => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You are about to start the booking process.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, proceed!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Navigate to the booking page
+          router.push({ name: 'BookRoom', params: { id: roomId } })
+        }
+      })
+    }
+    
+    // Fetch available rooms on component mount
+    onMounted(() => {
+      fetchAvailableRooms()
     })
-  }
-}
-
-// Set the form visibility after the component is mounted
-onMounted(() => {
-  setTimeout(() => {
-    showForm.value = true
-  }, 50)
-})
-</script>
-
+    
+    const BASE_URL = 'http://localhost:8000'
+    
+    // Display room image in a SweetAlert modal
+    const viewImage = (imagePath) => {
+      Swal.fire({
+        title: 'Room Image',
+        imageUrl: `${BASE_URL}${imagePath}`,
+        imageWidth: 400,
+        imageHeight: 250,
+        imageAlt: 'Room image'
+      })
+    }
+    </script>
+    
+    <style scoped>
+    .rooms-container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    
+    .room-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    
+    .room-card {
+      background: #fff;
+      padding: 16px;
+      border-radius: 4px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+    
+    .room-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .book-btn {
+      margin-top: 10px;
+      padding: 7px 16px;
+      background-color: rgb(100, 100, 177);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .book-btn:hover {
+      background-color: rgb(100, 100, 177);
+    }
+    
+    .book-btn.unavailable {
+      background-color: #d33;
+      cursor: not-allowed;
+    }
+    
+    .view-btn {
+      color: red;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 140px;
+      margin-top: 0px;
+    }
   
-<style scoped>
-
-.add-room-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 90vh;
-  padding-left: 400px;
-  width: 140vh;
-}
-
-.form-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-}
-
-.form-title {
-  font-size: 24px;
-  font-weight: bold;
-  color: #3A7D44;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.form-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.form-field {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.submit-btn {
-  margin-top: 5px;
-  font-weight: bold;
-}
-
-.image-wrapper {
-  margin-bottom: 20px;
-}
-
-.image-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: #3A7D44;
-}
-
-.image-input {
-  width: 100%;
-  padding: 12px;
-  border: 2px solid #F1F2FAFF;
-  border-radius: 8px;
-  background-color: #f1f1f1;
-  display: block;
-  font-size: 14px;
-  color: #333;
-  transition: border-color 0.3s ease;
-}
-
-.image-input:focus {
-  border-color: #EBEFF3FF;
-  outline: none;
-}
-
-.image-name {
-  font-size: 14px;
-  font-weight: 500;
-  color: #3A7D44;
-}
-
-.image-input::-webkit-file-upload-button {
-  color: #E7E8EEFF;
-  background-color: #e1f5fe;
-  padding: 10px;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
-.image-input::-webkit-file-upload-button:hover {
-  background-color: #bbdefb;
-}
-
-/* Animation for fade-slide */
-.fade-slide-enter-active {
-  animation: fadeSlideIn 0.6s ease-out;
-}
-
-@keyframes fadeSlideIn {
-  from {
+    .fade-slide-enter-from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
-  to {
+  .fade-slide-enter-active {
+    transition: all 0.5s ease;
+  }
+  .fade-slide-enter-to {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-
-</style>
+  
+    </style>
+    

@@ -4,15 +4,15 @@
       <transition name="fade-slide">
         <div v-if="visible" class="register-container">
           <img src="/public/images/ardhi.png" alt="Event System Logo" class="logo" />
+          <div class="system-title">ARU EVENT SYSTEM</div>
 
           <form @submit.prevent="onSubmit" autocomplete="off">
             <div class="full-width custom-input">
-              <label for="username">Username</label>
               <input v-model="form.username" id="username" type="text" placeholder="Enter your username" required />
             </div>
 
             <div class="full-width custom-input">
-              <label for="password">Password</label>
+
               <input v-model="form.password" id="password" type="password" placeholder="Enter your password" required />
             </div>
 
@@ -57,7 +57,7 @@ onDone( async ({ data }) => {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     if (result.user.isStaff) {
-      router.push('/BookedRooms');
+      router.push('/admin-dashboard');
     } else {
       router.push('/rooms');
     }
@@ -114,9 +114,9 @@ onMounted(() => {
     background: #ffffff;
     padding: 2rem;
     margin-top: 0px;
-    border-radius: 12px;
+    border-radius: 2px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
+    max-width: 450px;
     position: fixed;
     width: 100%;
     text-align: center;
@@ -149,7 +149,7 @@ onMounted(() => {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 4px;
     background-color: #f9f9f9;
     transition: border-color 0.3s ease;
   }
@@ -248,6 +248,12 @@ onMounted(() => {
   margin-bottom: 10px;
 }
 
+.system-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #3A7D44;
+  margin-bottom: 20px;
+}
 
   </style>
   

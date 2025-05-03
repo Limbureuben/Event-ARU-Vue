@@ -1,38 +1,45 @@
 <template>
-  <AdminHeaderComponent />
-  <div class="rooms-container">
-    <div class="room-cards">
-      <div class="room-card" style="animation-delay: 0.1s">
-        <div class="icon-container">
-          <i class="fas fa-building"></i>
+  <div class="dashboard-background">
+    <div class="overlay"></div>
+
+    <AdminHeaderComponent class="admin-header"/>
+    <div class="rooms-container">
+      <div class="room-cards">
+        <div class="room-card">
+          <div class="icon-container">
+            <i class="fas fa-building"></i>
+          </div>
+          <h3>ROOMS</h3>
+          <p><strong>Location:</strong> ARDHI UNIVERSITY</p>
+          <p><strong>Total Rooms: </strong>{{ stats.total_rooms }}</p>
         </div>
-        <h3>ROOMS</h3>
-        <p><strong>Location:</strong> ARDHI UNIVERSITY</p>
-        <p><strong>Total Rooms: </strong>{{ stats.total_rooms }}</p>
-      </div>
-      <div class="room-card" style="animation-delay: 0.2s">
-        <div class="icon-container">
-          <i class="fas fa-users"></i>
+        <div class="room-card">
+          <div class="icon-container">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3>USERS</h3>
+          <p><strong>Location:</strong> Room</p>
+          <p><strong>Registred Users: </strong>{{ stats.total_users }}</p>
         </div>
-        <h3>USERS</h3>
-        <p><strong>Location:</strong> Room</p>
-        <p><strong>Registred Users: </strong>{{ stats.total_users }}</p>
-      </div>
-      <div class="room-card" style="animation-delay: 0.3s">
-        <div class="icon-container">
-          <i class="fas fa-calendar-check"></i>
+        <div class="room-card">
+          <div class="icon-container">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <h3>BOOKED ROOM</h3>
+          <p><strong>Location:</strong> Room</p>
+          <p><strong>Total Booked Rooms: </strong>{{ stats.total_bookings }}</p>
         </div>
-        <h3>BOOKED ROOM</h3>
-        <p><strong>Location:</strong> Room</p>
-        <p><strong>Total Booked Rooms: </strong>{{ stats.total_bookings }}</p>
       </div>
     </div>
   </div>
+  <AdminFooter/>
 </template>
+
 
 
 <script setup>
 import AdminHeaderComponent from '@/components/AdminHeader.vue'
+import AdminFooter from '@/components/AdminFooter.vue'
 import { ref, onMounted } from 'vue'
 
 const stats = ref({
@@ -78,13 +85,14 @@ onMounted(() => {
 
 .icon-container {
   font-size: 40px;
-  color: #3A7D44;
+  color: rgb(100, 100, 177);
   margin-bottom: 10px;
   text-align: center;
 }
 
 .room-cards {
   display: grid;
+  margin-top: 60px;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
 }
@@ -92,7 +100,7 @@ onMounted(() => {
 .room-card {
   background: #fff;
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: fadeInUp 0.6s ease forwards;
@@ -113,5 +121,36 @@ onMounted(() => {
   transform: translateY(-6px);
   box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 12px;
 }
+
+.dashboard-background {
+  position: relative;
+  min-height: 90vh;
+  background: url('/public/images/winners.jpg') no-repeat center center fixed;
+  background-size: 100%;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.3); /* Dim the background */
+  z-index: 1;
+}
+
+/* Header fix */
+:deep(.admin-header) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Content fix */
+.rooms-container {
+  position: relative;
+  z-index: 2;
+}
+
 </style>
 

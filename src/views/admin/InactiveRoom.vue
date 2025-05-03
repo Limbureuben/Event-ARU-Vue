@@ -121,7 +121,7 @@ onMounted(() => {
 .book-btn {
   margin-top: 10px;
   padding: 7px 16px;
-  background-color: #3A7D44;
+  background-color: rgb(100, 100, 177);
   color: white;
   border: none;
   border-radius: 4px;
@@ -129,7 +129,7 @@ onMounted(() => {
 }
 
 .book-btn:hover {
-  background-color: #2a5b30;
+  background-color: rgb(100, 100, 177);
 }
 
 .button-group {

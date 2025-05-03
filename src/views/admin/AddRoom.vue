@@ -68,14 +68,12 @@
         </div>
   
         <v-btn
-          color="indigo"
-          variant="flat"
-          class="submit-btn"
-          type="submit"
-          block
-        >
-          Add Room
-        </v-btn>
+            style="background-color: #3A7D44; color: white"
+            variant="flat"
+            class="submit-btn"
+            type="submit"
+            block
+          >Add Room</v-btn>
       </form>
     </div>
   </template>
@@ -148,9 +146,8 @@
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   height: 90vh; /* Full height of the viewport */
-  /* padding: 40px; */
-  padding-left: 450px;
-  width: 150vh;
+  padding-left: 400px;
+  width: 140vh;
 }
 
 .form-container {
@@ -160,13 +157,13 @@
   background: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
 .form-title {
   font-size: 24px;
   font-weight: bold;
-  color: #3f51b5;
+  color: #3A7D44;
   margin-bottom: 30px;
   text-align: center;
 }
@@ -198,7 +195,7 @@
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 5px;
-  color: #3f51b5;
+  color: #3A7D44;
 }
 
 /* Style the actual file input field */
@@ -224,7 +221,7 @@
 .image-name {
   font-size: 14px;
   font-weight: 500;
-  color: #3f51b5;
+  color: #3A7D44;
 }
 
 /* Customize the file input button */

@@ -1,5 +1,6 @@
 <template>
   <UserHeaderComponent />
+  <BackgroundLayout>
   <div class="add-room-page">
     <transition name="fade-slide">
       <form
@@ -53,7 +54,7 @@
         </div>
 
         <v-btn
-          style="background-color: #3A7D44; color: white"
+          style="background-color: rgb(100, 100, 177); color: white"
           variant="flat"
           class="submit-btn"
           type="submit"
@@ -64,6 +65,7 @@
       </form>
     </transition>
   </div>
+</BackgroundLayout>
 </template>
 
 
@@ -72,6 +74,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import UserHeaderComponent from '@/components/UserHeader.vue'
 import Swal from 'sweetalert2'
+import BackgroundLayout from '@/components/BackgroundLayout.vue'
 
 const router = useRouter()
 const roomId = router.currentRoute.value.params.id
@@ -186,7 +189,7 @@ box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 .form-title {
 font-size: 24px;
 font-weight: bold;
-color: #3A7D44;
+color: rgb(100, 100, 177);
 margin-bottom: 30px;
 text-align: center;
 }
@@ -216,42 +219,7 @@ display: block;
 font-size: 14px;
 font-weight: 600;
 margin-bottom: 5px;
-color: #3A7D44;
-}
-
-.image-input {
-width: 100%;
-padding: 12px;
-border: 2px solid #F1F2FAFF;
-border-radius: 8px;
-background-color: #f1f1f1;
-display: block;
-font-size: 14px;
-color: #333;
-transition: border-color 0.3s ease;
-}
-
-.image-input:focus {
-border-color: #EBEFF3FF;
-outline: none;
-}
-
-.image-name {
-font-size: 14px;
-font-weight: 500;
-color: #3A7D44;
-}
-
-.image-input::-webkit-file-upload-button {
-color: #E7E8EEFF;
-background-color: #e1f5fe;
-padding: 10px;
-border-radius: 5px;
-font-weight: bold;
-}
-
-.image-input::-webkit-file-upload-button:hover {
-background-color: #bbdefb;
+color: rgb(100, 100, 177);
 }
 
 /* Animation for fade-slide */

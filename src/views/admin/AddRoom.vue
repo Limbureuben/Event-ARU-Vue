@@ -138,7 +138,7 @@ const onSubmit = async () => {
       const data = await response.json();
       toast.success('Room added successfully!');
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      router.push('/admin/admin-dashboard');
+      router.push('/admin-dashboard');
     } else {
       const errorData = await response.json();
       toast.error(`Error: ${errorData.message}`);

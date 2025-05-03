@@ -1,5 +1,6 @@
 <template>
   <UserHeaderComponent />
+  <BackgroundLayout>
   <section class="container py-5" v-if="user">
     <MDBCard>
       <MDBCardBody class="text-center">
@@ -21,12 +22,14 @@
   <div v-else class="text-center mt-5">
     <MDBSpinner />
   </div>
+</BackgroundLayout>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import UserHeaderComponent from '@/components/UserHeader.vue'
 import { MDBCard, MDBCardBody, MDBBtn, MDBSpinner } from 'mdb-vue-ui-kit'
+import BackgroundLayout from '@/components/BackgroundLayout.vue'
 
 const user = ref<any>(null)
 

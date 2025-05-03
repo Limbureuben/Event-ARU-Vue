@@ -1,5 +1,6 @@
 <template>
   <UserHeaderComponent />
+  <BackgroundLayout>
   <div class="rooms-container">
     <TransitionGroup name="fade-slide" tag="div" class="room-cards">
       <div v-for="room in rooms" :key="room.id" class="room-card">
@@ -20,6 +21,7 @@
       </div>
     </TransitionGroup>
   </div>
+</BackgroundLayout>
 </template>
 
   
@@ -28,6 +30,7 @@
   import { useRouter } from 'vue-router'
   import Swal from 'sweetalert2'
   import UserHeaderComponent from '@/components/UserHeader.vue'
+  import BackgroundLayout from '@/components/BackgroundLayout.vue'
   
   const router = useRouter()
   const rooms = ref([])

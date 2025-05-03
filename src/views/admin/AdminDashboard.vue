@@ -6,25 +6,16 @@
         <h3>ROOMS</h3>
         <p><strong>Location:</strong> Room</p>
         <p><strong>Booked Date:</strong> 4546</p>
-        <div class="button-group">
-        <button class="book-btn">Activate Room</button>
-        </div>
       </div>
       <div class="room-card">
-        <h3>DHDT</h3>
+        <h3>USERS</h3>
         <p><strong>Location:</strong> Room</p>
         <p><strong>Booked Date:</strong> 4546</p>
-        <div class="button-group">
-        <button class="book-btn">Activate Room</button>
-        </div>
       </div>
       <div class="room-card">
         <h3>BOOKED ROOM</h3>
         <p><strong>Location:</strong> Room</p>
         <p><strong>Booked Date:</strong> 4546</p>
-        <div class="button-group">
-        <button class="book-btn">Activate Room</button>
-        </div>
       </div>
     </div>
   </div>

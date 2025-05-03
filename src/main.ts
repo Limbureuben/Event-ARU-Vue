@@ -4,6 +4,9 @@ import router from './router'
 import './style.css'
 import 'mdb-vue-ui-kit/css/mdb.min.css';
 import './assets/tailwind.css';
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+
 
 // Vuetify
 import 'vuetify/styles'

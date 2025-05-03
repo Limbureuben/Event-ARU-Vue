@@ -6,7 +6,7 @@
     />
     <MDBCollapse id="navbarExample01" v-model="collapse1">
       <MDBNavbarNav>
-        <MDBNavbarItem to="/rooms" :class="{ active: isActive('/rooms') }">Home</MDBNavbarItem>
+        <MDBNavbarItem to="/rooms" :class="{ active: isActive('/rooms') }">Dashboard</MDBNavbarItem>
         <MDBNavbarItem to="/profile" :class="{ active: isActive('/profile') }">Profile</MDBNavbarItem>
         <MDBNavbarItem tag="a" href="#" @click.prevent="logout">Logout</MDBNavbarItem>
         <MDBNavbarItem to="/contact" :class="{ active: isActive('/contact') }">Contact</MDBNavbarItem>

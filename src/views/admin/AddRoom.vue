@@ -1,7 +1,13 @@
 <template>
   <AdminHeaderComponent />
-    <div class="add-room-page">
-      <form @submit.prevent="onSubmit" class="form-container" autocomplete="off">
+  <div class="add-room-page">
+    <transition name="fade-slide">
+      <form
+        v-if="showForm"
+        @submit.prevent="onSubmit"
+        class="form-container"
+        autocomplete="off"
+      >
         <h2 class="form-title">Add Event Room</h2>
         <v-text-field
           label="Room Name"
@@ -32,7 +38,7 @@
             required
           />
         </div>
-  
+
         <div class="form-row">
           <v-text-field
             label="Location"
@@ -53,7 +59,7 @@
             required
           />
         </div>
-  
+
         <div class="image-wrapper">
           <label for="image" class="image-label">Upload Room Image</label>
           <input
@@ -66,86 +72,93 @@
           />
           <p v-if="selectedImage" class="image-name">{{ selectedImage.name }}</p>
         </div>
-  
+
         <v-btn
-            style="background-color: #3A7D44; color: white"
-            variant="flat"
-            class="submit-btn"
-            type="submit"
-            block
-          >Add Room</v-btn>
+          style="background-color: #3A7D44; color: white"
+          variant="flat"
+          class="submit-btn"
+          type="submit"
+          block
+        >
+          Add Room
+        </v-btn>
       </form>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  import { toast } from 'vue3-toastify';
-  import { useRouter } from 'vue-router';
-  import AdminHeaderComponent from '@/components/AdminHeader.vue';
+    </transition>
+  </div>
+</template>
 
-  const router = useRouter();
+<script setup>
+import { ref, onMounted } from 'vue';
+import { toast } from 'vue3-toastify';
+import { useRouter } from 'vue-router';
+import AdminHeaderComponent from '@/components/AdminHeader.vue';
 
-  const form = ref({
-    roomName: '',
-    capacity: '',
-    price: '',
-    location: 'ARDHI UNIVERSITY',
-    available_date: '',
-  })
+const router = useRouter();
 
-  const selectedImage = ref(null);
+const form = ref({
+  roomName: '',
+  capacity: '',
+  price: '',
+  location: 'ARDHI UNIVERSITY',
+  available_date: '',
+});
 
-  const onImageSelected = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      selectedImage.value = file;
+const selectedImage = ref(null);
+const showForm = ref(false); // Control form visibility for animation
+
+const onImageSelected = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    selectedImage.value = file;
+  }
+};
+
+const onSubmit = async () => {
+  const formData = new FormData();
+  formData.append('name', form.value.roomName.toUpperCase());
+  formData.append('capacity', form.value.capacity);
+  formData.append('price', form.value.price);
+  formData.append('location', form.value.location.toUpperCase());
+  formData.append('available_date', form.value.available_date);
+  formData.append('image', selectedImage.value);
+
+  try {
+    const response = await fetch('http://localhost:8000/api/register-room/', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      toast.success('Room added successfully!');
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      router.push('/admin/admin-dashboard');
+    } else {
+      const errorData = await response.json();
+      toast.error(`Error: ${errorData.message}`);
     }
-  };
+  } catch (error) {
+    toast.error('An error occurred while adding the room.');
+    console.error('Error:', error);
+  }
+};
 
-  const onSubmit = async () => {
-    const formData = new FormData();
-    formData.append('name', form.value.roomName.toUpperCase());
-    formData.append('capacity', form.value.capacity);
-    formData.append('price', form.value.price);
-    formData.append('location', form.value.location.toUpperCase());
-    formData.append('available_date', form.value.available_date);
-    formData.append('image', selectedImage.value);
-
-    try {
-      const response = await fetch('http://localhost:8000/api/register-room/', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        toast.success('Room added successfully!');
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        router.push('/admin/admin-dashboard');
-      } else {
-        const errorData = await response.json();
-        toast.error(`Error: ${errorData.message}`);
-      }
-    }
-    catch (error) {
-      toast.error('An error occurred while adding the room.');
-      console.error('Error:', error);
-    }
-  };
-  </script>
-  
-  
+onMounted(() => {
+  setTimeout(() => {
+    showForm.value = true;
+  }, 50);
+});
+</script>
 <style scoped>
 
 .add-room-page {
-  display: flex; /* Enable Flexbox */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 90vh; /* Full height of the viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
   padding-left: 400px;
   width: 140vh;
 }
@@ -171,7 +184,7 @@
 .form-row {
   display: flex;
   gap: 10px;
-  margin-bottom: 10px; /* Increased bottom margin */
+  margin-bottom: 10px;
 }
 
 .form-field {
@@ -184,12 +197,10 @@
   font-weight: bold;
 }
 
-/* Style the file input wrapper */
 .image-wrapper {
-  margin-bottom: 20px; /* Increased bottom margin */
+  margin-bottom: 20px;
 }
 
-/* Label for the image file input */
 .image-label {
   display: block;
   font-size: 14px;
@@ -198,7 +209,6 @@
   color: #3A7D44;
 }
 
-/* Style the actual file input field */
 .image-input {
   width: 100%;
   padding: 12px;
@@ -211,20 +221,17 @@
   transition: border-color 0.3s ease;
 }
 
-/* When the field is focused */
 .image-input:focus {
   border-color: #EBEFF3FF;
   outline: none;
 }
 
-/* Style the file name below the input */
 .image-name {
   font-size: 14px;
   font-weight: 500;
   color: #3A7D44;
 }
 
-/* Customize the file input button */
 .image-input::-webkit-file-upload-button {
   color: #E7E8EEFF;
   background-color: #e1f5fe;
@@ -236,5 +243,22 @@
 .image-input::-webkit-file-upload-button:hover {
   background-color: #bbdefb;
 }
+
+/* Animation for fade-slide */
+.fade-slide-enter-active {
+  animation: fadeSlideIn 0.6s ease-out;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 </style>

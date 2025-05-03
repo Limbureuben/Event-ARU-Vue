@@ -1,8 +1,12 @@
 <template>
   <AdminHeaderComponent />
   <div class="rooms-container">
-    <div class="room-cards">
-      <div v-for="room in rooms" :key="room.id" class="room-card">
+    <transition-group name="fade-slide" tag="div" class="room-cards">
+      <div
+        v-for="room in rooms"
+        :key="room.id"
+        class="room-card"
+      >
         <h3>{{ room.name }}</h3>
         <p><strong>Location:</strong> {{ room.location }}</p>
         <p><strong>Booked Date:</strong> {{ formatDate(room.available_date) }}</p>
@@ -10,9 +14,10 @@
           <button class="book-btn" @click="activateRoom(room.id)">Activate Room</button>
         </div>
       </div>
-    </div>
+    </transition-group>
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from 'vue'
@@ -132,4 +137,21 @@ onMounted(() => {
   justify-content: space-between;
   margin-top: 10px;
 }
+
+/* Existing styles... */
+
+.fade-slide-enter-active, .fade-slide-leave-active {
+  transition: all 0.6s ease;
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
 </style>

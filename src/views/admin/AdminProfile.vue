@@ -1,6 +1,7 @@
 <template>
-      <AdminHeaderComponent />
-    <section class="container py-5" v-if="user">
+  <AdminHeaderComponent />
+  <section class="container py-5" v-if="user">
+    <transition name="fade-slide">
       <MDBCard>
         <MDBCardBody class="text-center">
           <img
@@ -17,11 +18,13 @@
           </div>
         </MDBCardBody>
       </MDBCard>
-    </section>
-    <div v-else class="text-center mt-5">
-      <MDBSpinner />
-    </div>
-  </template>
+    </transition>
+  </section>
+  <div v-else class="text-center mt-5">
+    <MDBSpinner />
+  </div>
+</template>
+
   
   <script setup lang="ts">
   import { ref, onMounted } from 'vue'
@@ -57,8 +60,39 @@
   
   <style scoped>
   section {
-    max-width: 500px;
-    margin: auto;
+  max-width: 500px;
+  margin: auto;
+}
+
+.fade-slide-enter-active {
+  animation: fadeSlideIn 0.6s ease-out;
+}
+
+.fade-slide-leave-active {
+  animation: fadeSlideOut 0.6s ease-in;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
   </style>
   

@@ -7,9 +7,8 @@
       <MDBCollapse id="navbarExample01" v-model="collapse1">
         <MDBNavbarNav>
           <MDBNavbarItem to="/BookedRooms" active>Home</MDBNavbarItem>
-          <MDBNavbarItem to="/add-room">Add Room</MDBNavbarItem>
-          <MDBNavbarItem to="/profile">Profile</MDBNavbarItem>
-          <MDBNavbarItem to="/profile">Booked Room</MDBNavbarItem>
+          <MDBNavbarItem to="/add-room">AddRoom</MDBNavbarItem>
+          <MDBNavbarItem to="/admin-profile">Profile</MDBNavbarItem>
           <MDBNavbarItem tag="a" href="#" @click.prevent="logout">Logout</MDBNavbarItem>
           <MDBNavbarItem to="#">Contact</MDBNavbarItem>
           <MDBNavbarItem to="#">About</MDBNavbarItem>

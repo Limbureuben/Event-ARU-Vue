@@ -13,6 +13,7 @@ import UserProfile from '@/views/user/UserProfile.vue';
 import BookRoom from '@/views/user/BookRoom.vue';
 import { compact } from '@apollo/client/utilities';
 import InactiveRoom from '@/views/admin/InactiveRoom.vue';
+import AdminProfile from '@/views/admin/AdminProfile.vue';
 
 const routes = [
   { path: '/', component: Login },
@@ -21,6 +22,7 @@ const routes = [
   { path: '/rooms', component: Room },
   { path: '/bookroom/:id', component: BookRoom, name: 'BookRoom' },
   { path: '/profile', component: UserProfile},
+  { path: '/admin-profile', component: AdminProfile },
   { path: '/admin-dashboard', component: AdminDashboard },
   { path: '/add-room', component: AddRoom },
   { path: '/BookedRooms', component: InactiveRoom },

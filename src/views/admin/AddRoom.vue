@@ -147,7 +147,7 @@
   display: flex; /* Enable Flexbox */
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
-  height: 100vh; /* Full height of the viewport */
+  height: 90vh; /* Full height of the viewport */
   /* padding: 40px; */
   padding-left: 450px;
   width: 150vh;

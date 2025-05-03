@@ -2,12 +2,28 @@
   <AdminHeaderComponent />
   <div class="rooms-container">
     <div class="room-cards">
-      <div v-for="room in rooms" :key="room.id" class="room-card">
-        <h3>{{ room.name }}</h3>
-        <p><strong>Location:</strong> {{ room.location }}</p>
-        <p><strong>Booked Date:</strong> {{ formatDate(room.available_date) }}</p>
+      <div class="room-card">
+        <h3>ROOMS</h3>
+        <p><strong>Location:</strong> Room</p>
+        <p><strong>Booked Date:</strong> 4546</p>
         <div class="button-group">
-          <button class="book-btn" @click="activateRoom(room.id)">Activate Room</button>
+        <button class="book-btn">Activate Room</button>
+        </div>
+      </div>
+      <div class="room-card">
+        <h3>DHDT</h3>
+        <p><strong>Location:</strong> Room</p>
+        <p><strong>Booked Date:</strong> 4546</p>
+        <div class="button-group">
+        <button class="book-btn">Activate Room</button>
+        </div>
+      </div>
+      <div class="room-card">
+        <h3>BOOKED ROOM</h3>
+        <p><strong>Location:</strong> Room</p>
+        <p><strong>Booked Date:</strong> 4546</p>
+        <div class="button-group">
+        <button class="book-btn">Activate Room</button>
         </div>
       </div>
     </div>
@@ -15,77 +31,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import Swal from 'sweetalert2'
 import AdminHeaderComponent from '@/components/AdminHeader.vue'
 
-const router = useRouter()
-const rooms = ref([])
-
-const BASE_URL = 'http://localhost:8000'
-
-// Fetch rooms from the backend
-const fetchAvailableRooms = async () => {
-  try {
-    const response = await fetch(`${BASE_URL}`)
-    if (!response.ok) throw new Error('Failed to fetch rooms')
-    const data = await response.json()
-    rooms.value = data
-  } catch (error) {
-    console.error('Error fetching rooms:', error)
-  }
-}
-
-// Format the available date of the room
-const formatDate = (date) => {
-  return new Date(date).toLocaleDateString()
-}
-
-// Confirm before activating a room
-const activateRoom = async (roomId) => {
-  const result = await Swal.fire({
-    title: "Are you sure?",
-    text: "This will activate the room and make it available for booking.",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3A7D44",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, activate it!"
-  })
-
-  if (!result.isConfirmed) return
-
-  try {
-    const response = await fetch(`${BASE_URL}/api/activate-room/${roomId}/`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ is_available: true })
-    })
-
-    if (!response.ok) throw new Error('Failed to activate room')
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Room activated successfully'
-    })
-
-    fetchAvailableRooms()
-  } catch (error) {
-    console.error('Error activating room:', error)
-    Swal.fire({
-      icon: 'error',
-      title: 'Activation failed',
-      text: error.message
-    })
-  }
-}
-
-onMounted(() => {
-  fetchAvailableRooms()
-})
 </script>
 
 <style scoped>
@@ -119,7 +66,7 @@ onMounted(() => {
   background-color: #3A7D44;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
 }
 

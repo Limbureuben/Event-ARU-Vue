@@ -119,7 +119,7 @@ onMounted(() => {
   background-color: #3A7D44;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
 }
 

@@ -3,16 +3,25 @@
   <div class="rooms-container">
     <div class="room-cards">
       <div class="room-card">
+        <div class="icon-container">
+          <i class="fas fa-bed"></i>
+        </div>
         <h3>ROOMS</h3>
         <p><strong>Location:</strong> Room</p>
         <p><strong>Booked Date:</strong> 4546</p>
       </div>
       <div class="room-card">
+        <div class="icon-container">
+          <i class="fas fa-users"></i>
+        </div>
         <h3>USERS</h3>
         <p><strong>Location:</strong> Room</p>
         <p><strong>Booked Date:</strong> 4546</p>
       </div>
       <div class="room-card">
+        <div class="icon-container">
+          <i class="fas fa-calendar-check"></i>
+        </div>
         <h3>BOOKED ROOM</h3>
         <p><strong>Location:</strong> Room</p>
         <p><strong>Booked Date:</strong> 4546</p>
@@ -20,6 +29,7 @@
     </div>
   </div>
 </template>
+
 
 <script setup>
 import AdminHeaderComponent from '@/components/AdminHeader.vue'

@@ -4,7 +4,7 @@
       <transition name="fade-slide">
         <div v-if="visible" class="register-container">
           <img src="/public/images/ardhi.png" alt="Event System Logo" class="logo" />
-          <div class="system-title">ARU EVENT SYSTEM</div>
+          <div class="system-title">ARU EVENT MANAGEMENT SYSTEM</div>
 
           <form @submit.prevent="onSubmit" autocomplete="off">
             <div class="full-width custom-input">
@@ -127,7 +127,7 @@ onMounted(() => {
   .country-name {
     font-size: 24px;
     font-weight: bold;
-    color: #3A7D44;
+    color: rgb(100, 100, 177);
     margin-bottom: 20px;
   }
   
@@ -156,7 +156,7 @@ onMounted(() => {
   
   .full-width.custom-input input:focus {
     outline: none;
-    border-color: #3A7D44;
+    border-color: rgb(100, 100, 177);
   }
   
   /* Login button */
@@ -169,7 +169,7 @@ onMounted(() => {
     font-size: 16px;
     font-weight: bold;
     color: #fff;
-    background-color: #3A7D44;
+    background-color: rgb(100, 100, 177);
     border: none;
     border-radius: 8px;
     width: 100%;
@@ -178,7 +178,7 @@ onMounted(() => {
   }
   
   .register-btn:hover {
-    background-color: #2a5b30;
+    background-color: rgb(100, 100, 177);
   }
   
   /* Login link */
@@ -188,7 +188,7 @@ onMounted(() => {
   }
   
   .login-link a {
-    color: #3A7D44;
+    color: rgb(100, 100, 177);
     text-decoration: none;
     font-weight: bold;
   }
@@ -208,10 +208,6 @@ onMounted(() => {
     color: #333;
     cursor: pointer;
     z-index: 10;
-  }
-  
-  .back-button:hover {
-    color: #3A7D44;
   }
   
   /* Responsive Design */
@@ -251,7 +247,7 @@ onMounted(() => {
 .system-title {
   font-size: 20px;
   font-weight: bold;
-  color: #3A7D44;
+  color: rgb(100, 100, 177);
   margin-bottom: 20px;
 }
 

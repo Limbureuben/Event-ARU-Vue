@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-background">
     <div class="overlay"></div>
-
     <AdminHeaderComponent class="admin-header"/>
+    <BackgroundLayout>
     <div class="rooms-container">
       <div class="room-cards">
         <div class="room-card">
@@ -29,16 +29,19 @@
           <p><strong>Location:</strong> Room</p>
           <p><strong>Total Booked Rooms: </strong>{{ stats.total_bookings }}</p>
         </div>
+
       </div>
     </div>
+  </BackgroundLayout>
   </div>
-  <AdminFooter/>
+
 </template>
 
 
 <script setup>
 import AdminHeaderComponent from '@/components/AdminHeader.vue'
 import AdminFooter from '@/components/AdminFooter.vue'
+import BackgroundLayout from '@/components/BackgroundLayout.vue'
 import { ref, onMounted } from 'vue'
 
 const stats = ref({
@@ -123,9 +126,7 @@ onMounted(() => {
 
 .dashboard-background {
   position: relative;
-  min-height: 90vh;
-  background: url('/public/images/winners.jpg') no-repeat center center fixed;
-  background-size: 100%;
+
   overflow: hidden;
 }
 

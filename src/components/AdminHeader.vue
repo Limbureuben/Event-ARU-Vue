@@ -3,11 +3,11 @@
     <MDBNavbarToggler target="navbarExample01" @click="collapse1 = !collapse1" />
     <MDBCollapse id="navbarExample01" v-model="collapse1">
       <MDBNavbarNav>
-        <MDBNavbarItem :class="{ active: route.path === '/admin-dashboard' }" to="/admin-dashboard">Dashboard</MDBNavbarItem>
-        <MDBNavbarItem :class="{ active: route.path === '/BookedRooms' }" to="/BookedRooms">BookedRoom</MDBNavbarItem>
-        <MDBNavbarItem :class="{ active: route.path === '/add-room' }" to="/add-room">AddRoom</MDBNavbarItem>
-        <MDBNavbarItem :class="{ active: route.path === '/admin-profile' }" to="/admin-profile">Profile</MDBNavbarItem>
-        <MDBNavbarItem tag="a" href="#" @click.prevent="logout">Logout</MDBNavbarItem>
+        <MDBNavbarItem :class="{ active: route.path === '/admin-dashboard' }" to="/admin-dashboard">DASHBOARD</MDBNavbarItem>
+        <MDBNavbarItem :class="{ active: route.path === '/BookedRooms' }" to="/BookedRooms">BOOKEDROOM</MDBNavbarItem>
+        <MDBNavbarItem :class="{ active: route.path === '/add-room' }" to="/add-room">ADDROOM</MDBNavbarItem>
+        <MDBNavbarItem :class="{ active: route.path === '/admin-profile' }" to="/admin-profile">PPROFILE</MDBNavbarItem>
+        <MDBNavbarItem tag="a" href="#" @click.prevent="logout">LOG-OUT</MDBNavbarItem>
       </MDBNavbarNav>
     </MDBCollapse>
   </MDBNavbar>

@@ -1,5 +1,6 @@
 <template>
   <AdminHeaderComponent />
+  <BackgroundLayout>
   <div class="rooms-container">
     <transition-group name="fade-slide" tag="div" class="room-cards">
       <div
@@ -16,6 +17,7 @@
       </div>
     </transition-group>
   </div>
+</BackgroundLayout>
 </template>
 
 
@@ -24,6 +26,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
 import AdminHeaderComponent from '@/components/AdminHeader.vue'
+import BackgroundLayout from '@/components/BackgroundLayout.vue'
 
 const router = useRouter()
 const rooms = ref([])
@@ -98,11 +101,7 @@ onMounted(() => {
   padding: 20px;
   max-width: 1200px;
   margin: auto;
-  background-image: url('/public/images/winners.jpg');
-  background-size: 90%;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh; 
+  min-height: 90vh; 
 }
 
 .room-cards {

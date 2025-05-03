@@ -1,5 +1,6 @@
 <template>
   <AdminHeaderComponent />
+  <BackgroundLayout>
   <section class="container py-5" v-if="user">
     <transition name="fade-slide">
       <MDBCard>
@@ -23,12 +24,14 @@
   <div v-else class="text-center mt-5">
     <MDBSpinner />
   </div>
+</BackgroundLayout>
 </template>
 
   
   <script setup lang="ts">
   import { ref, onMounted } from 'vue'
   import AdminHeaderComponent from '@/components/AdminHeader.vue'
+  import BackgroundLayout from '@/components/BackgroundLayout.vue'
   import { MDBCard, MDBCardBody, MDBBtn, MDBSpinner } from 'mdb-vue-ui-kit'
   
   const user = ref<any>(null)

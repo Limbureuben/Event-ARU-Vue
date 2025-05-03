@@ -121,7 +121,7 @@
   .country-name {
     font-size: 24px;
     font-weight: bold;
-    color: #3A7D44;
+    color: rgb(100, 100, 177);
     margin-bottom: 20px;
   }
   
@@ -150,7 +150,7 @@
   
   .full-width.custom-input input:focus {
     outline: none;
-    border-color: #3A7D44;
+    border-color: rgb(100, 100, 177);
   }
   
   /* Login button */
@@ -163,7 +163,7 @@
     font-size: 16px;
     font-weight: bold;
     color: #fff;
-    background-color: #3A7D44;
+    background-color: rgb(100, 100, 177);
     border: none;
     border-radius: 8px;
     width: 100%;
@@ -172,7 +172,7 @@
   }
   
   .register-btn:hover {
-    background-color: #2a5b30;
+    background-color: rgb(100, 100, 177);
   }
   
   /* Login link */
@@ -182,7 +182,7 @@
   }
   
   .login-link a {
-    color: #3A7D44;
+    color: rgb(100, 100, 177);
     text-decoration: none;
     font-weight: bold;
   }
@@ -204,9 +204,6 @@
     z-index: 10;
   }
   
-  .back-button:hover {
-    color: #3A7D44;
-  }
   
   /* Responsive Design */
   @media (max-width: 600px) {
@@ -248,7 +245,7 @@
 .system-title {
   font-size: 20px;
   font-weight: bold;
-  color: #3A7D44;
+  color: rgb(100, 100, 177);
   margin-bottom: 20px;
 }
 

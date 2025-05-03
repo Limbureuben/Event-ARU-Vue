@@ -102,7 +102,7 @@
   .room-card {
     background: #fff;
     padding: 16px;
-    border-radius: 12px;
+    border-radius: 4px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
   }
@@ -114,15 +114,15 @@
   .book-btn {
     margin-top: 10px;
     padding: 7px 16px;
-    background-color: #3A7D44;
+    background-color: rgb(100, 100, 177);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
   }
   
   .book-btn:hover {
-    background-color: #2a5b30;
+    background-color: rgb(100, 100, 177);
   }
   
   .book-btn.unavailable {

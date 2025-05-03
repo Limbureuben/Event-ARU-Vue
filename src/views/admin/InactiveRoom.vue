@@ -98,6 +98,11 @@ onMounted(() => {
   padding: 20px;
   max-width: 1200px;
   margin: auto;
+  background-image: url('/public/images/winners.jpg');
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; 
 }
 
 .room-cards {

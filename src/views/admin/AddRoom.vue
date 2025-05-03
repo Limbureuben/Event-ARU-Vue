@@ -1,5 +1,6 @@
 <template>
   <AdminHeaderComponent />
+  <BackgroundLayout>
   <div class="add-room-page">
     <transition name="fade-slide">
       <form
@@ -74,7 +75,7 @@
         </div>
 
         <v-btn
-          style="background-color: #3A7D44; color: white"
+          style="background-color: rgb(100, 100, 177); color: white"
           variant="flat"
           class="submit-btn"
           type="submit"
@@ -85,6 +86,7 @@
       </form>
     </transition>
   </div>
+</BackgroundLayout>
 </template>
 
 <script setup>
@@ -92,6 +94,7 @@ import { ref, onMounted } from 'vue';
 import { toast } from 'vue3-toastify';
 import { useRouter } from 'vue-router';
 import AdminHeaderComponent from '@/components/AdminHeader.vue';
+import BackgroundLayout from '@/components/BackgroundLayout.vue'
 
 const router = useRouter();
 
@@ -176,7 +179,7 @@ onMounted(() => {
 .form-title {
   font-size: 24px;
   font-weight: bold;
-  color: #3A7D44;
+  color: rgb(100, 100, 177);
   margin-bottom: 30px;
   text-align: center;
 }
@@ -206,7 +209,7 @@ onMounted(() => {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 5px;
-  color: #3A7D44;
+  color: rgb(100, 100, 177);
 }
 
 .image-input {
@@ -229,7 +232,7 @@ onMounted(() => {
 .image-name {
   font-size: 14px;
   font-weight: 500;
-  color: #3A7D44;
+  color: rgb(100, 100, 177);
 }
 
 .image-input::-webkit-file-upload-button {

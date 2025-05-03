@@ -36,7 +36,6 @@
 </template>
 
 
-
 <script setup>
 import AdminHeaderComponent from '@/components/AdminHeader.vue'
 import AdminFooter from '@/components/AdminFooter.vue'

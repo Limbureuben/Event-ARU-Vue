@@ -7,11 +7,9 @@ import NotFound from '../views/NotFound.vue'
 import Register from '../views/sharing/Register.vue';
 import UserDashboard from '@/views/user/User-dashboard.vue';
 import AddRoom from '@/views/admin/AddRoom.vue';
-import Sidebar from '@/views/admin/Sidebar.vue';
 import Room from '@/views/user/Room.vue';
 import UserProfile from '@/views/user/UserProfile.vue';
 import BookRoom from '@/views/user/BookRoom.vue';
-import { compact } from '@apollo/client/utilities';
 import InactiveRoom from '@/views/admin/InactiveRoom.vue';
 import AdminProfile from '@/views/admin/AdminProfile.vue';
 

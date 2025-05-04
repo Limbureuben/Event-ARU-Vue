@@ -68,11 +68,6 @@ onDone( async ({ data }) => {
     } else {
       router.push('/rooms');
     }
-    // if (result.user.isStaff) {
-    //   router.push('/admin-dashboard');
-    // } else {
-    //   router.push('/rooms');
-    // }
   } else {
     console.log('Login failed:', result.message);
     toast.error('Login failed! Please check your credentials.');

@@ -13,24 +13,58 @@ import BookRoom from '@/views/user/BookRoom.vue';
 import InactiveRoom from '@/views/admin/InactiveRoom.vue';
 import AdminProfile from '@/views/admin/AdminProfile.vue';
 
+// const routes = [
+//   { path: '/', component: Login },
+//   { path: '/login', component: Login },
+//   { path: '/register', component: Register },
+//   { path: '/rooms', component: Room },
+//   { path: '/bookroom/:id', component: BookRoom, name: 'BookRoom' },
+//   { path: '/profile', component: UserProfile},
+//   { path: '/admin-profile', component: AdminProfile },
+//   { path: '/admin-dashboard', component: AdminDashboard },
+//   { path: '/add-room', component: AddRoom },
+//   { path: '/BookedRooms', component: InactiveRoom },
+//   { path: '/user-dashboard', component: UserDashboard },
+//   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
+// ]
+
+
 const routes = [
   { path: '/', component: Login },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/rooms', component: Room },
   { path: '/bookroom/:id', component: BookRoom, name: 'BookRoom' },
-  { path: '/profile', component: UserProfile},
-  { path: '/admin-profile', component: AdminProfile },
-  { path: '/admin-dashboard', component: AdminDashboard },
-  { path: '/add-room', component: AddRoom },
+  { path: '/profile', component: UserProfile },
+  { path: '/admin-profile', component: AdminProfile, meta: { requiresAuth: true, role: 'admin' } },
+  { path: '/admin-dashboard', component: AdminDashboard, meta: { requiresAuth: true, role: 'admin' } },
+  { path: '/add-room', component: AddRoom, meta: { requiresAuth: true, role: 'admin' } },
   { path: '/BookedRooms', component: InactiveRoom },
-  { path: '/user-dashboard', component: UserDashboard },
+  { path: '/user-dashboard', component: UserDashboard, meta: { requiresAuth: true, role: 'user' } },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ]
+
 
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+
+  if (to.meta.requiresAuth) {
+    if (!token) {
+      return next('/login');
+    }
+
+    if (to.meta.role && to.meta.role !== role) {
+      return next('/login');
+    }
+  }
+  
+  next();
+});
 
 export default router

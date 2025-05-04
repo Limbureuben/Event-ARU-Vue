@@ -31,6 +31,7 @@ const route = useRoute();
 
 const logout = async () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('role');
   toast.success('Logout successful!');
   await new Promise(resolve => setTimeout(resolve, 1500));
   router.push('/login');

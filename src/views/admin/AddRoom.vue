@@ -126,7 +126,7 @@ const onSubmit = async () => {
   formData.append('image', selectedImage.value);
 
   try {
-    const response = await fetch('http://localhost:8000/api/register-room/', {
+    const response = await fetch('https://house-backend-3.onrender.com/api/register-room/', {
       method: 'POST',
       body: formData,
       headers: {

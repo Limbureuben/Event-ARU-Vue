@@ -7,25 +7,20 @@ import './assets/tailwind.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 
-
-// Vuetify
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
-// Apollo
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client/core'
 import { setContext } from '@apollo/client/link/context'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 
-// Toastification
 import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
-// Apollo Auth Link setup
 const httpLink = createHttpLink({
-  uri: 'http://localhost:8000/graphql/',
+  uri: 'https://house-backend-3.onrender.com/graphql/',
 })
 
 

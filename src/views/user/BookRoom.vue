@@ -103,7 +103,7 @@ console.log('Booking payload:', {
 })
 
 try {
-  const response = await fetch('http://localhost:8000/api/booking-events/', {
+  const response = await fetch('https://house-backend-3.onrender.com/api/booking-events/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

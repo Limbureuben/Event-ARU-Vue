@@ -30,7 +30,7 @@ import {
 
 const collapse1 = ref(false);
 const router = useRouter();
-const route = useRoute(); // ⬅️ get current route
+const route = useRoute();
 
 const logout = async () => {
   localStorage.removeItem('token');

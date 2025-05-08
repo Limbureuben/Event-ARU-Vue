@@ -31,7 +31,7 @@ import BackgroundLayout from '@/components/BackgroundLayout.vue'
 const router = useRouter()
 const rooms = ref([])
 
-const BASE_URL = 'http://localhost:8000'
+const BASE_URL = 'https://house-backend-3.onrender.com'
 
 // Fetch rooms from the backend
 const fetchAvailableRooms = async () => {

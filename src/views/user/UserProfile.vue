@@ -38,7 +38,7 @@ onMounted(async () => {
     const token = localStorage.getItem('token');
     if (!token) throw new Error('No token found. Please log in.');
 
-    const response = await fetch('http://localhost:8000/api/profile/', {
+    const response = await fetch('https://house-backend-3.onrender.com/api/profile/', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

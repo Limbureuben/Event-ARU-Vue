@@ -52,7 +52,7 @@ const stats = ref({
 
 const fetchDashboardStats = async () => {
   try {
-    const response = await fetch('http://localhost:8000/api/dashboard-stats/')
+    const response = await fetch('https://house-backend-3.onrender.com/api/dashboard-stats/')
     if(!response.ok ) throw new Error('Failed to fetch stats')
     const data =  await response.json()
     stats.value = data

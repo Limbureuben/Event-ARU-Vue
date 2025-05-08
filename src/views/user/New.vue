@@ -43,7 +43,7 @@
     // Fetch rooms from the backend
     const fetchAvailableRooms = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/available-rooms/')
+        const response = await fetch('https://house-backend-3.onrender.com/api/available-rooms/')
         if (!response.ok) throw new Error('Failed to fetch rooms')
         const data = await response.json()
         rooms.value = data
@@ -80,7 +80,7 @@
       fetchAvailableRooms()
     })
     
-    const BASE_URL = 'http://localhost:8000'
+    const BASE_URL = 'https://house-backend-3.onrender.com'
     
     // Display room image in a SweetAlert modal
     const viewImage = (imagePath) => {

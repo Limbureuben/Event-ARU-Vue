@@ -32,7 +32,7 @@ export default defineConfig({
   },
   server: {
     allowedHosts: [
-      '178c-197-186-8-56.ngrok-free.app' // <-- your current Ngrok URL
+      '178c-197-186-8-56.ngrok-free.app'
     ]
   }
 })

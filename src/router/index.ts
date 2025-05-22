@@ -14,8 +14,10 @@ import InactiveRoom from '@/views/admin/InactiveRoom.vue';
 import AdminProfile from '@/views/admin/AdminProfile.vue';
 
 
+
 const routes = [
   { path: '/', component: Login },
+
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/rooms', component: Room, meta: { requiresAuth: true, role: 'user'} },

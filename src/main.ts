@@ -23,7 +23,6 @@ const httpLink = createHttpLink({
   uri: 'https://house-backend-3.onrender.com/graphql/',
 })
 
-
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token')
   return {

@@ -5,7 +5,7 @@
       <div class="register-container">
         <img src="/public/images/ardhi.png" alt="Event System Logo" class="logo" />
         <div class="system-title">ARU EVENT MANAGEMENT SYSTEM</div>
-        <!-- Animate the form -->
+
         <transition name="fade-slide">
           <form v-if="showForm" @submit.prevent="onSubmit">
             <div class="full-width custom-input">

@@ -10,8 +10,8 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 90vh;
-  position: relative; /* Needed to contain the overlay */
+  min-height: 100vh;
+  position: relative; /* Needed to contain the overlay
 }
 
   .background-wrapper::before {
